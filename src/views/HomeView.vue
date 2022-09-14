@@ -1,9 +1,14 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue';
+import NoteListComponent from '../components/NoteListComponent.vue';
+import { useUserStore } from '../stores/index.js';
+const store = useUserStore();
+
+const count = store.count;
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <NoteListComponent />
+    <div>{{ count }}</div>
   </main>
 </template>
