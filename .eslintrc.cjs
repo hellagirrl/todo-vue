@@ -12,7 +12,7 @@ module.exports = {
     ecmaVersion: 'latest',
   },
   rules: {
-    quotes: [2, 'single', { avoidEscape: true }],
+    quotes: ['error', 'single', { avoidEscape: true }],
     'prettier/prettier': ['error', { singleQuote: true }],
   },
 };
