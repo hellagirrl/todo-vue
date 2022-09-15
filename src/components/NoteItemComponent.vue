@@ -15,7 +15,12 @@ const props = defineProps({
           {{ props.note.todos.toString() }}
         </p>
         <div class="flex flex-row justify-between">
-          <a class="text-indigo-500 inline-flex items-center"
+          <router-link
+            :to="{
+              name: 'note',
+              params: { name: props.note.name.toLowerCase() },
+            }"
+            class="text-indigo-500 inline-flex items-center"
             >Далее<svg
               class="w-4 h-4 ml-2"
               viewBox="0 0 24 24"
@@ -27,7 +32,7 @@ const props = defineProps({
             >
               <path d="M5 12h14"></path>
               <path d="M12 5l7 7-7 7"></path></svg
-          ></a>
+          ></router-link>
           <button>Удалить</button>
         </div>
       </div>
