@@ -21,18 +21,18 @@ const editTodo = () => {
   <div class="pt-8 pr-4 container">
     <div class="h-full flex items-start bg-gray-100 p-8">
       <div class="flex-grow">
-        <div class="flex flex-row justify-between">
-          <h1 class="text-3xl pl-2 font-medium text-gray-900 mb-3 text-center">
+        <div class="flex flex-row justify-between border-b">
+          <h1 class="text-3xl pl-2 font-medium text-gray-900 mb-6 text-center">
             {{ currentNote.name }}
           </h1>
           <div class="flex flex-row justify-between">
-            <SaveSVG class="mr-4" />
-            <UndoSVG class="mr-4" />
-            <RemoveSVG />
+            <SaveSVG class="cursor-pointer mr-4" />
+            <UndoSVG class="cursor-pointer mr-4" />
+            <RemoveSVG class="cursor-pointer" />
           </div>
         </div>
         <div
-          class="flex justify-between mb-4"
+          class="flex justify-between mb-4 mt-4 pt-2"
           v-for="(todo, id) in currentNote.todos"
           :key="id"
         >
@@ -77,4 +77,9 @@ const editTodo = () => {
   </div>
 </template>
 
-<style></style>
+<style scoped>
+svg {
+  width: 25px;
+  height: 25px;
+}
+</style>

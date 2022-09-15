@@ -14,7 +14,8 @@ const openNote = (note) => {
 };
 
 const todosNames = () => {
-  return props.note.todos.map((todo) => todo.name);
+  let names = props.note.todos.map((todo) => todo.name);
+  return names.join(', ');
 };
 // const deleteNote = (note) => {
 //   // make an action in pinia
@@ -29,7 +30,7 @@ const todosNames = () => {
           {{ props.note.name }}
         </h1>
         <p class="leading-relaxed mb-5">
-          {{ todosNames().toString() }}
+          {{ todosNames() }}
         </p>
         <div class="flex flex-row justify-between">
           <span
