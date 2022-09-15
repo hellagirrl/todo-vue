@@ -1,5 +1,13 @@
-<script setup></script>
+<script setup>
+import NoteItemComponent from '../components/NoteItemComponent.vue';
+import { useUserStore } from '../stores/index.js';
+const store = useUserStore();
+
+const notes = store.notes;
+</script>
 
 <template>
-  <div>Todo Main</div>
+  <section class="lg:flex flex-row flex-wrap">
+    <NoteItemComponent v-for="note in notes" :key="note.id" :note="note" />
+  </section>
 </template>

@@ -1,14 +1,11 @@
 <script setup>
 import NoteListComponent from '../components/NoteListComponent.vue';
-import { useUserStore } from '../stores/index.js';
-const store = useUserStore();
-
-const count = store.count;
+import NoteFormComponent from '../components/NoteFormComponent.vue';
 </script>
 
 <template>
-  <main>
+  <div class="container">
+    <NoteFormComponent />
     <NoteListComponent />
-    <div>{{ count }}</div>
-  </main>
+  </div>
 </template>

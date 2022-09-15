@@ -3,6 +3,10 @@
 module.exports = {
   content: ['./index.html', './src/**/*.{js,vue}'],
   theme: {
+    container: {
+      center: true,
+      padding: '4rem',
+    },
     extend: {},
   },
   plugins: [],
