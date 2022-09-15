@@ -1,7 +1,24 @@
 <script setup>
+import { useRouter } from 'vue-router';
+
 const props = defineProps({
   note: Object,
 });
+
+const router = useRouter();
+const openNote = (note) => {
+  router.push({
+    name: 'note',
+    params: { name: note.name.toLowerCase() },
+  });
+};
+
+const todosNames = () => {
+  return props.note.todos.map((todo) => todo.name);
+};
+// const deleteNote = (note) => {
+//   // make an action in pinia
+// };
 </script>
 
 <template>
@@ -12,15 +29,12 @@ const props = defineProps({
           {{ props.note.name }}
         </h1>
         <p class="leading-relaxed mb-5">
-          {{ props.note.todos.toString() }}
+          {{ todosNames().toString() }}
         </p>
         <div class="flex flex-row justify-between">
-          <router-link
-            :to="{
-              name: 'note',
-              params: { name: props.note.name.toLowerCase() },
-            }"
-            class="text-indigo-500 inline-flex items-center"
+          <span
+            @click="openNote(props.note)"
+            class="text-blue-500 inline-flex items-center cursor-pointer"
             >Далее<svg
               class="w-4 h-4 ml-2"
               viewBox="0 0 24 24"
@@ -32,8 +46,14 @@ const props = defineProps({
             >
               <path d="M5 12h14"></path>
               <path d="M12 5l7 7-7 7"></path></svg
-          ></router-link>
-          <button>Удалить</button>
+          ></span>
+          <button
+            type="button"
+            @click.prevent="deleteNote(props.note)"
+            class="text-red-700 font-medium rounded-lg text-sm px-5 py-2 mt-2 mb-2"
+          >
+            Удалить
+          </button>
         </div>
       </div>
     </div>
