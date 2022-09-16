@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, ref } from 'vue';
-import NoteListComponent from '../components/NoteListComponent.vue';
-import { useUserStore } from '../stores/index.js';
+import NoteListComponent from '../components/notes/NoteListComponent.vue';
+import { useUserStore } from '../stores';
 const store = useUserStore();
 
 const noteName = ref('');
