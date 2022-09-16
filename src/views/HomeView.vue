@@ -11,7 +11,9 @@ function addNewNote() {
   if (noteName.value.trim().length && listOfTodos.value.trim().length) {
     const noteToAdd = reactive({
       name: noteName.value,
-      todos: listOfTodos.value.split(', '),
+      todos: listOfTodos.value
+        .split(', ')
+        .map((todo) => ({ name: todo, completed: false })),
     });
     store.addNote(noteToAdd);
   }

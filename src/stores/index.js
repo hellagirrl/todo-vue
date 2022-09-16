@@ -6,19 +6,31 @@ export const useUserStore = defineStore('userStore', {
       notes: [
         {
           name: 'Make A List',
-          todos: ['Create', 'Edit'],
+          todos: [
+            { name: 'Create', completed: false },
+            { name: 'Edit', completed: false },
+          ],
         },
         {
           name: 'Second',
-          todos: ['Create', 'Edit'],
+          todos: [
+            { name: 'Create', completed: false },
+            { name: 'Edit', completed: false },
+          ],
         },
         {
           name: 'Third',
-          todos: ['Create', 'Edit'],
+          todos: [
+            { name: 'Create', completed: false },
+            { name: 'Edit', completed: false },
+          ],
         },
         {
           name: 'Fourth',
-          todos: ['Create', 'Edit'],
+          todos: [
+            { name: 'Create', completed: false },
+            { name: 'Edit', completed: false },
+          ],
         },
       ],
     };
@@ -27,6 +39,9 @@ export const useUserStore = defineStore('userStore', {
     getSpecificNote: (state) => {
       return (noteName) =>
         state.notes.find((note) => note.name.toLowerCase() == noteName);
+    },
+    getTodosByName: () => {
+      return (todos) => todos.map((todo) => todo.name);
     },
   },
   actions: {

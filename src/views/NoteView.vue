@@ -12,6 +12,7 @@ const store = useUserStore();
 
 const route = useRoute();
 const currentNote = store.getSpecificNote(route.params.name);
+const currentNoteTodos = store.getTodosByName(currentNote.todos);
 const editTodo = () => {
   console.log('fgdgf');
 };
@@ -39,7 +40,7 @@ const editTodo = () => {
         </div>
         <div
           class="flex justify-between mb-4 mt-4 pt-2"
-          v-for="(todo, id) in currentNote.todos"
+          v-for="(todo, id) in currentNoteTodos"
           :key="id"
         >
           <div>

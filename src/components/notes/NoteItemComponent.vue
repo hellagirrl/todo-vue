@@ -16,9 +16,8 @@ const openNote = (note) => {
   });
 };
 
-function deleteNote(note) {
-  store.removeNote(note);
-}
+const deleteNote = (note) => store.removeNote(note);
+const getTodos = (todos) => store.getTodosByName(todos).join(', ');
 </script>
 
 <template>
@@ -29,7 +28,7 @@ function deleteNote(note) {
           {{ props.note.name }}
         </h1>
         <p class="leading-relaxed mb-5">
-          {{ props.note.todos.join(', ') }}
+          {{ getTodos(props.note.todos) }}
         </p>
         <div class="flex flex-row justify-between">
           <span
