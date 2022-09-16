@@ -3,7 +3,7 @@ import { RouterLink } from 'vue-router';
 </script>
 
 <template>
-  <header class="py-3 my-3 sm:container text-gray-700">
+  <header class="py-3 my-3 container text-gray-700">
     <nav>
       <RouterLink
         to="/"
