@@ -5,42 +5,25 @@ export const useUserStore = defineStore('userStore', {
     return {
       notes: [
         {
-          id: '1',
           name: 'Make A List',
-          todos: [
-            { name: 'Create', completed: false },
-            { name: 'Edit', completed: false },
-          ],
+          todos: ['Create', 'Edit'],
         },
         {
-          id: '2',
           name: 'Second',
-          todos: [
-            { name: 'Todo1', completed: false },
-            { name: 'Todo2', completed: false },
-          ],
+          todos: ['Create', 'Edit'],
         },
         {
-          id: '3',
           name: 'Third',
-          todos: [
-            { name: 'Todo1', completed: false },
-            { name: 'Todo2', completed: false },
-          ],
+          todos: ['Create', 'Edit'],
         },
         {
-          id: '4',
           name: 'Fourth',
-          todos: [
-            { name: 'Todo1', completed: false },
-            { name: 'Todo2', completed: false },
-          ],
+          todos: ['Create', 'Edit'],
         },
       ],
     };
   },
   getters: {
-    doubleCount: (state) => state.count * 2,
     getSpecificNote: (state) => {
       return (noteName) =>
         state.notes.find((note) => note.name.toLowerCase() == noteName);
@@ -51,8 +34,7 @@ export const useUserStore = defineStore('userStore', {
       this.notes.push(newNote);
     },
     removeNote(noteToRemove) {
-      let index = this.notes.indexOf(noteToRemove);
-      this.notes.splice(index, 1);
+      this.notes = this.notes.filter((note) => note != noteToRemove);
     },
   },
 });

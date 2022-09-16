@@ -8,6 +8,6 @@ const notes = store.notes;
 
 <template>
   <section class="lg:flex flex-row flex-wrap">
-    <NoteItemComponent v-for="note in notes" :key="note.id" :note="note" />
+    <NoteItemComponent v-for="(note, idx) in notes" :key="idx" :note="note" />
   </section>
 </template>

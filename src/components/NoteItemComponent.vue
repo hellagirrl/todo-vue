@@ -1,11 +1,14 @@
 <script setup>
 import { useRouter } from 'vue-router';
+import { useUserStore } from '../stores/index.js';
 
 const props = defineProps({
   note: Object,
 });
 
 const router = useRouter();
+const store = useUserStore();
+
 const openNote = (note) => {
   router.push({
     name: 'note',
@@ -13,13 +16,9 @@ const openNote = (note) => {
   });
 };
 
-const todosNames = () => {
-  let names = props.note.todos.map((todo) => todo.name);
-  return names.join(', ');
-};
-// const deleteNote = (note) => {
-//   // make an action in pinia
-// };
+function deleteNote(note) {
+  store.removeNote(note);
+}
 </script>
 
 <template>
@@ -30,7 +29,7 @@ const todosNames = () => {
           {{ props.note.name }}
         </h1>
         <p class="leading-relaxed mb-5">
-          {{ todosNames() }}
+          {{ props.note.todos.join(', ') }}
         </p>
         <div class="flex flex-row justify-between">
           <span
@@ -51,7 +50,7 @@ const todosNames = () => {
           <button
             type="button"
             @click.prevent="deleteNote(props.note)"
-            class="text-red-700 font-medium rounded-lg text-sm px-5 py-2 mt-2 mb-2"
+            class="text-red-700 font-medium rounded-lg text-sm px-5"
           >
             Удалить
           </button>

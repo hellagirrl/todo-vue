@@ -18,17 +18,23 @@ const editTodo = () => {
 </script>
 
 <template>
-  <div class="pt-8 pr-4 container">
+  <div class="pr-4 container">
     <div class="h-full flex items-start bg-gray-100 p-8">
       <div class="flex-grow">
         <div class="flex flex-row justify-between border-b">
-          <h1 class="text-3xl pl-2 font-medium text-gray-900 mb-6 text-center">
+          <h1 class="text-3xl pl-2 font-medium text-gray-900 mb-6">
             {{ currentNote.name }}
           </h1>
           <div class="flex flex-row justify-between">
-            <SaveSVG class="cursor-pointer mr-4" />
-            <UndoSVG class="cursor-pointer mr-4" />
-            <RemoveSVG class="cursor-pointer" />
+            <SaveSVG
+              class="svg-title text-green-500 cursor-pointer mr-4 opacity-50 hover:opacity-100"
+            />
+            <UndoSVG
+              class="svg-title cursor-pointer mr-4 opacity-50 hover:opacity-100"
+            />
+            <RemoveSVG
+              class="svg-title text-red-500 cursor-pointer opacity-50 hover:opacity-100"
+            />
           </div>
         </div>
         <div
@@ -38,22 +44,22 @@ const editTodo = () => {
         >
           <div>
             <p
-              class="ml-2 text-lg font-medium text-gray-900 dark:text-gray-300"
+              class="ml-2 text-md font-medium text-gray-900 dark:text-gray-300"
             >
-              {{ todo.name }}
+              {{ todo }}
             </p>
           </div>
           <div class="flex flex-row">
             <ConfirmSVG
-              class="cursor-pointer mr-2"
+              class="svg-todo cursor-pointer mr-4 opacity-50 hover:opacity-100"
               @click.prevent="markAsDone(todo)"
             />
             <EditSVG
-              class="cursor-pointer mr-2"
+              class="svg-todo cursor-pointer mr-4 opacity-50 hover:opacity-100"
               @click.prevent="editTodo(todo)"
             />
             <DeleteSVG
-              class="cursor-pointer"
+              class="svg-todo cursor-pointer opacity-50 hover:opacity-100"
               @click.prevent="removeTodo(todo)"
             />
           </div>
@@ -61,15 +67,9 @@ const editTodo = () => {
         <div class="flex flex-row justify-end">
           <button
             type="button"
-            class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2 mt-2 mr-2 mb-2"
+            class="text-red-700 font-medium rounded-lg text-sm pt-2 mt-2"
           >
-            Сохранить
-          </button>
-          <button
-            type="button"
-            class="text-red-700 font-medium rounded-lg text-sm px-5 py-2 mt-2 mb-2"
-          >
-            Удалить
+            Отменить редактирование
           </button>
         </div>
       </div>
@@ -78,7 +78,11 @@ const editTodo = () => {
 </template>
 
 <style scoped>
-svg {
+.svg-todo {
+  width: 20px;
+  height: 20px;
+}
+.svg-title {
   width: 25px;
   height: 25px;
 }
