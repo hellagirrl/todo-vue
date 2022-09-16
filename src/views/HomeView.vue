@@ -31,7 +31,7 @@ function addNewNote() {
     >
       <input
         required
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-8"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 mr-8"
         id="note"
         type="text"
         v-model="noteName"
@@ -39,7 +39,7 @@ function addNewNote() {
       />
       <input
         required
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-8"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 mr-8"
         id="todos"
         type="text"
         v-model="listOfTodos"

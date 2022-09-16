@@ -39,7 +39,7 @@ const editTodo = () => {
           </div>
         </div>
         <div
-          class="flex justify-between mb-4 mt-4 pt-2 border-b pb-2"
+          class="flex justify-between mb-4 mt-4 pt-2 border-b pb-4"
           v-for="(todo, id) in currentNoteTodos"
           :key="id"
         >

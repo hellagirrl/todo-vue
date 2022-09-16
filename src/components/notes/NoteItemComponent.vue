@@ -22,38 +22,38 @@ const getTodos = (todos) => store.getTodosByName(todos).join(', ');
 
 <template>
   <div class="pt-8 pr-4 lg:w-1/3">
-    <div class="h-full flex items-start bg-gray-100 p-8">
-      <div class="flex-grow">
-        <h1 class="title-font text-xl font-medium text-gray-900 mb-3">
-          {{ props.note.name }}
-        </h1>
-        <p class="leading-relaxed mb-5">
-          {{ getTodos(props.note.todos) }}
-        </p>
-        <div class="flex flex-row justify-between">
-          <span
-            @click="openNote(props.note)"
-            class="text-blue-500 inline-flex items-center cursor-pointer"
-            >Далее<svg
-              class="w-4 h-4 ml-2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M5 12h14"></path>
-              <path d="M12 5l7 7-7 7"></path></svg
-          ></span>
-          <button
-            type="button"
-            @click="deleteNote(props.note)"
-            class="text-red-700 font-medium rounded-lg text-sm px-5"
+    <div class="h-full flex flex-grow flex-col items-start bg-gray-100 p-8">
+      <h1 class="title-font text-xl font-medium text-gray-900 mb-3">
+        {{ props.note.name }}
+      </h1>
+      <p class="leading-relaxed mb-5 opacity-50 flex-grow">
+        {{ getTodos(props.note.todos) }}
+      </p>
+      <div class="flex flex-row justify-between">
+        <button
+          @click="openNote(props.note)"
+          class="text-blue-500 inline-flex items-center cursor-pointer"
+        >
+          Далее<svg
+            class="w-4 h-4 ml-2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           >
-            Удалить
-          </button>
-        </div>
+            <path d="M5 12h14"></path>
+            <path d="M12 5l7 7-7 7"></path>
+          </svg>
+        </button>
+        <button
+          type="button"
+          @click="deleteNote(props.note)"
+          class="text-red-700 font-medium rounded-lg text-sm px-5"
+        >
+          Удалить
+        </button>
       </div>
     </div>
   </div>
