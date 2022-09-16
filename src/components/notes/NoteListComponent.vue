@@ -1,9 +1,10 @@
 <script setup>
 import NoteItemComponent from './NoteItemComponent.vue';
 import { useUserStore } from '@/stores/index.js';
+import { computed } from 'vue';
 const store = useUserStore();
 
-const notes = store.notes;
+const notes = computed(() => store.getNotes);
 </script>
 
 <template>

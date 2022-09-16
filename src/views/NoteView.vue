@@ -19,7 +19,7 @@ const editTodo = () => {
 </script>
 
 <template>
-  <div class="pr-4 container">
+  <div class="container">
     <div class="h-full flex items-start bg-gray-100 p-8">
       <div class="flex-grow">
         <div class="flex flex-row justify-between border-b">
@@ -39,14 +39,19 @@ const editTodo = () => {
           </div>
         </div>
         <div
-          class="flex justify-between mb-4 mt-4 pt-2"
+          class="flex justify-between mb-4 mt-4 pt-2 border-b pb-2"
           v-for="(todo, id) in currentNoteTodos"
           :key="id"
         >
-          <div>
-            <p
-              class="ml-2 text-md font-medium text-gray-900 dark:text-gray-300"
-            >
+          <div class="flex flex-row items-center">
+            <input
+              id="bordered-checkbox-1"
+              type="checkbox"
+              value=""
+              name="bordered-checkbox"
+              class="w-4 h-4 cursor-pointer"
+            />
+            <p class="ml-2 text-md text-gray-900">
               {{ todo }}
             </p>
           </div>

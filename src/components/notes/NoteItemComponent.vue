@@ -23,7 +23,7 @@ const getTodos = (todos) => store.getTodosByName(todos).join(', ');
 <template>
   <div class="pt-8 pr-4 lg:w-1/3">
     <div class="h-full flex items-start bg-gray-100 p-8">
-      <div class="flex-grow pl-6">
+      <div class="flex-grow">
         <h1 class="title-font text-xl font-medium text-gray-900 mb-3">
           {{ props.note.name }}
         </h1>
@@ -48,7 +48,7 @@ const getTodos = (todos) => store.getTodosByName(todos).join(', ');
           ></span>
           <button
             type="button"
-            @click.prevent="deleteNote(props.note)"
+            @click="deleteNote(props.note)"
             class="text-red-700 font-medium rounded-lg text-sm px-5"
           >
             Удалить

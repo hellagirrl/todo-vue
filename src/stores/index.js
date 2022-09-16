@@ -36,6 +36,7 @@ export const useUserStore = defineStore('userStore', {
     };
   },
   getters: {
+    getNotes: (state) => state.notes,
     getSpecificNote: (state) => {
       return (noteName) =>
         state.notes.find((note) => note.name.toLowerCase() == noteName);
@@ -49,7 +50,7 @@ export const useUserStore = defineStore('userStore', {
       this.notes.push(newNote);
     },
     removeNote(noteToRemove) {
-      this.notes = this.notes.filter((note) => note != noteToRemove);
+      this.notes = this.notes.filter((note) => note !== noteToRemove);
     },
   },
 });
