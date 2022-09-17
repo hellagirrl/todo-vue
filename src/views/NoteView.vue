@@ -20,7 +20,7 @@ const editTodo = () => {
 
 <template>
   <div class="container">
-    <div class="h-full flex items-start bg-gray-100 p-8">
+    <div class="h-full rounded-md flex items-start bg-gray-100 p-8">
       <div class="flex-grow">
         <div class="flex flex-row justify-between border-b">
           <h1 class="text-3xl pl-2 font-medium text-gray-900 mb-6">

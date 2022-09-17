@@ -3,11 +3,9 @@ import { RouterLink } from 'vue-router';
 </script>
 
 <template>
-  <header class="py-3 my-3 container text-gray-700">
-    <nav>
-      <RouterLink
-        to="/"
-        class="text-sm sm:mr-6 md:text-lg font-semibold hover:text-gray-900"
+  <header class="bg-gray-700 text-white mb-5">
+    <nav class="container my-4">
+      <RouterLink to="/" class="text-md sm:mr-6 md:text-lg font-semibold"
         >Your Notes App</RouterLink
       >
     </nav>
