@@ -3,19 +3,40 @@ import { useUserStore } from '../stores/index.js';
 import { useRoute } from 'vue-router';
 import DeleteSVG from '../assets/icons/delete.svg';
 import ConfirmSVG from '../assets/icons/confirm.svg';
-import EditSVG from '../assets/icons/edit.svg';
 import SaveSVG from '../assets/icons/save.svg';
 import UndoSVG from '../assets/icons/undo.svg';
 import RemoveSVG from '../assets/icons/remove.svg';
-
+import RepeatSVG from '../assets/icons/repeat.svg';
 const store = useUserStore();
-
 const route = useRoute();
+
+// current note to return to in case the user decides to undo all the changes
 const currentNote = store.getSpecificNote(route.params.name);
 const currentNoteTodos = store.getTodosByName(currentNote.todos);
+
 const editTodo = () => {
   console.log('fgdgf');
 };
+
+function updateContent(e, contentType) {
+  let newNoteName;
+  let todo;
+  const inputText = e.target.innerText;
+  switch (contentType) {
+    case 'noteName':
+      newNoteName = inputText;
+      console.log(newNoteName);
+
+      break;
+    case 'todo':
+      todo = inputText;
+      console.log(todo);
+
+      break;
+    default:
+      break;
+  }
+}
 </script>
 
 <template>
@@ -23,7 +44,11 @@ const editTodo = () => {
     <div class="h-full rounded-md flex items-start bg-gray-100 p-8">
       <div class="flex-grow">
         <div class="flex flex-row justify-between border-b">
-          <h1 class="text-3xl pl-2 font-medium text-gray-900 mb-6">
+          <h1
+            contenteditable
+            @input="updateContent($event, 'noteName')"
+            class="text-3xl pl-2 font-medium text-gray-900 mb-6"
+          >
             {{ currentNote.name }}
           </h1>
           <div class="flex flex-row justify-between">
@@ -31,6 +56,9 @@ const editTodo = () => {
               class="svg-title text-green-500 cursor-pointer mr-4 opacity-50 hover:opacity-100"
             />
             <UndoSVG
+              class="svg-title cursor-pointer mr-4 opacity-50 hover:opacity-100"
+            />
+            <RepeatSVG
               class="svg-title cursor-pointer mr-4 opacity-50 hover:opacity-100"
             />
             <RemoveSVG
@@ -51,7 +79,11 @@ const editTodo = () => {
               name="bordered-checkbox"
               class="w-4 h-4 cursor-pointer"
             />
-            <p class="ml-2 text-md text-gray-900">
+            <p
+              contenteditable
+              @input="updateContent($event, 'todo')"
+              class="ml-2 text-md text-gray-900"
+            >
               {{ todo }}
             </p>
           </div>
@@ -59,10 +91,6 @@ const editTodo = () => {
             <ConfirmSVG
               class="svg-todo cursor-pointer mr-4 opacity-50 hover:opacity-100"
               @click.prevent="markAsDone(todo)"
-            />
-            <EditSVG
-              class="svg-todo cursor-pointer mr-4 opacity-50 hover:opacity-100"
-              @click.prevent="editTodo(todo)"
             />
             <DeleteSVG
               class="svg-todo cursor-pointer opacity-50 hover:opacity-100"
@@ -93,3 +121,8 @@ const editTodo = () => {
   height: 25px;
 }
 </style>
+
+<!--
+  TODO: 
+  - [] Add debounce on input el ?
+-->
