@@ -17,6 +17,10 @@ const currentNoteTodos = store.getTodosByName(currentNote.todos);
 const editTodo = () => {
   console.log('fgdgf');
 };
+const getField = (e) => {
+  let text = e.target.innerText;
+  console.log(text);
+};
 
 function updateContent(e, contentType) {
   let newNoteName;
@@ -47,6 +51,7 @@ function updateContent(e, contentType) {
           <h1
             contenteditable
             @input="updateContent($event, 'noteName')"
+            @click.prevent="getField"
             class="text-3xl pl-2 font-medium text-gray-900 mb-6"
           >
             {{ currentNote.name }}
@@ -82,6 +87,7 @@ function updateContent(e, contentType) {
             <p
               contenteditable
               @input="updateContent($event, 'todo')"
+              @click.prevent="getField"
               class="ml-2 text-md text-gray-900"
             >
               {{ todo }}
