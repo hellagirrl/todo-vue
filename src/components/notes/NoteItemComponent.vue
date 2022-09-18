@@ -51,7 +51,7 @@ const getTodos = (todos) => store.getTodosByName(todos).join(', ');
         </button>
         <button
           type="button"
-          @click="deleteNote(props.note)"
+          @click="deleteNote(props.note.id)"
           class="text-red-700 font-medium rounded-lg text-sm px-5"
         >
           Удалить

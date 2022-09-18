@@ -89,7 +89,7 @@ const markAsDone = (doneTodo) => {
 const removeNote = async (noteToRemove) => {
   modalData.value = 'note';
   await confirmation().then(() => {
-    store.removeNote(noteToRemove);
+    store.removeNote(noteToRemove.id);
     isModalOpen.value = false;
   });
   router.push('/');

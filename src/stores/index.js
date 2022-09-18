@@ -69,8 +69,8 @@ export const useUserStore = defineStore('userStore', {
     addNote(newNote) {
       this.notes.push(newNote);
     },
-    removeNote(noteToRemove) {
-      this.notes = this.notes.filter((note) => note !== noteToRemove);
+    removeNote(noteIdToRemove) {
+      this.notes = this.notes.filter((note) => note.id !== noteIdToRemove);
     },
   },
 });
