@@ -1,12 +1,15 @@
 <script setup>
 import { useUserStore } from '../stores/index.js';
 import { useRoute } from 'vue-router';
+import ConfirmModalComponent from '@/components/ConfirmModalComponent.vue';
 import DeleteSVG from '../assets/icons/delete.svg';
 import ConfirmSVG from '../assets/icons/confirm.svg';
 import SaveSVG from '../assets/icons/save.svg';
 import UndoSVG from '../assets/icons/undo.svg';
 import RemoveSVG from '../assets/icons/remove.svg';
 import RepeatSVG from '../assets/icons/repeat.svg';
+import { ref } from 'vue';
+
 const store = useUserStore();
 const route = useRoute();
 
@@ -30,22 +33,22 @@ function updateContent(e, contentType) {
     case 'noteName':
       newNoteName = inputText;
       console.log(newNoteName);
-
       break;
     case 'todo':
       todo = inputText;
       console.log(todo);
-
       break;
     default:
       break;
   }
 }
+
+const isModalOpen = ref(false);
 </script>
 
 <template>
   <div class="container">
-    <div class="h-full rounded-md flex items-start bg-gray-100 p-8">
+    <div class="relative h-full rounded-md flex items-start bg-gray-100 p-8">
       <div class="flex-grow">
         <div class="flex flex-row justify-between border-b">
           <h1
@@ -108,12 +111,18 @@ function updateContent(e, contentType) {
           <button
             type="button"
             class="text-red-700 font-medium rounded-lg text-sm pt-2 mt-2"
+            @click.prevent="isModalOpen = true"
           >
             Отменить редактирование
           </button>
         </div>
       </div>
     </div>
+    <teleport to="body">
+      <div v-if="isModalOpen">
+        <ConfirmModalComponent @close="isModalOpen = false" />
+      </div>
+    </teleport>
   </div>
 </template>
 
