@@ -8,18 +8,19 @@ import SaveSVG from '../assets/icons/save.svg';
 import UndoSVG from '../assets/icons/undo.svg';
 import RemoveSVG from '../assets/icons/remove.svg';
 import RepeatSVG from '../assets/icons/repeat.svg';
+import AddSVG from '../assets/icons/add.svg';
 import { ref } from 'vue';
+// import { computed } from 'vue';
 
 const store = useUserStore();
 const route = useRoute();
 
 // current note to return to in case the user decides to undo all the changes
 const currentNote = store.getSpecificNote(route.params.name);
-const currentNoteTodos = store.getTodosByName(currentNote.todos);
+// const currentNoteTodos = computed(() =>
+//   store.getTodosByName(currentNote.todos)
+// );
 
-const editTodo = () => {
-  console.log('fgdgf');
-};
 const getField = (e) => {
   let text = e.target.innerText;
   console.log(text);
@@ -44,6 +45,27 @@ function updateContent(e, contentType) {
 }
 
 const isModalOpen = ref(false);
+const showTodoInput = ref(false);
+const todoName = ref('');
+
+const addNewTodo = () => {
+  if (todoName.value?.length) {
+    currentNote.todos.push({ name: todoName.value, completed: false });
+  }
+  todoName.value = null;
+  showTodoInput.value = false;
+};
+
+const removeTodo = (todoToRemove) => {
+  currentNote.todos = currentNote.todos.filter(
+    (todo) => todo.name != todoToRemove.name
+  );
+};
+
+const markAsDone = (doneTodo) => {
+  const todoToMark = currentNote.todos.find((todo) => todo.name == doneTodo);
+  todoToMark.completed = !todoToMark.completed;
+};
 </script>
 
 <template>
@@ -76,7 +98,7 @@ const isModalOpen = ref(false);
         </div>
         <div
           class="flex justify-between mb-4 mt-4 pt-2 border-b pb-4"
-          v-for="(todo, id) in currentNoteTodos"
+          v-for="(todo, id) in currentNote.todos"
           :key="id"
         >
           <div class="flex flex-row items-center">
@@ -92,14 +114,15 @@ const isModalOpen = ref(false);
               @input="updateContent($event, 'todo')"
               @click.prevent="getField"
               class="ml-2 text-md text-gray-900"
+              :class="[todo.completed ? 'line-through' : '']"
             >
-              {{ todo }}
+              {{ todo.name }}
             </p>
           </div>
           <div class="flex flex-row">
             <ConfirmSVG
               class="svg-todo cursor-pointer mr-4 opacity-50 hover:opacity-100"
-              @click.prevent="markAsDone(todo)"
+              @click.prevent="markAsDone(todo.name)"
             />
             <DeleteSVG
               class="svg-todo cursor-pointer opacity-50 hover:opacity-100"
@@ -107,6 +130,24 @@ const isModalOpen = ref(false);
             />
           </div>
         </div>
+        <button
+          type="button"
+          v-if="!showTodoInput"
+          @click.prevent="showTodoInput = true"
+        >
+          <AddSVG
+            class="svg-todo cursor-pointer opacity-50 hover:opacity-100"
+          />
+        </button>
+        <input
+          required
+          class="shadow appearance-none border rounded w-full py-2 pl-3 text-gray-700 text-sm leading-tight focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 mr-8"
+          type="text"
+          v-model="todoName"
+          placeholder="Добавьте новую задачу"
+          v-if="showTodoInput"
+          @keyup.enter="addNewTodo"
+        />
         <div class="flex flex-row justify-end">
           <button
             type="button"
