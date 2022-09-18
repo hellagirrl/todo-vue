@@ -57,9 +57,10 @@ const addNewTodo = () => {
 };
 
 const removeTodo = (todoToRemove) => {
-  currentNote.todos = currentNote.todos.filter(
-    (todo) => todo.name != todoToRemove.name
-  );
+  // currentNote.todos = currentNote.todos.filter(
+  //   (todo) => todo.name != todoToRemove.name
+  // );
+  currentNote.todos.splice(todoToRemove, 1);
 };
 
 const markAsDone = (doneTodo) => {
@@ -126,7 +127,7 @@ const markAsDone = (doneTodo) => {
             />
             <DeleteSVG
               class="svg-todo cursor-pointer opacity-50 hover:opacity-100"
-              @click.prevent="removeTodo(todo)"
+              @click.prevent="removeTodo(id)"
             />
           </div>
         </div>
