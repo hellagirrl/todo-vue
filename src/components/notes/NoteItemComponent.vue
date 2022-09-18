@@ -1,7 +1,8 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/index.js';
-
+import ConfirmModalComponent from '@/components/ConfirmModalComponent.vue';
+import { ref } from 'vue';
 const props = defineProps({
   note: Object,
 });
@@ -15,9 +16,22 @@ const openNote = (note) => {
     params: { name: note.name.toLowerCase() },
   });
 };
-
-const deleteNote = (note) => store.removeNote(note);
 const getTodos = (todos) => store.getTodosByName(todos).join(', ');
+
+const isModalOpen = ref(false);
+const isConfirmed = ref(null);
+const modalData = ref(null);
+
+const deleteNote = async (note) => {
+  modalData.value = 'note';
+  isModalOpen.value = true;
+  await new Promise((resolve, reject) => {
+    isConfirmed.value = resolve;
+  });
+  store.removeNote(note);
+  isModalOpen.value = false;
+  isConfirmed.value = null;
+};
 </script>
 
 <template>
@@ -51,13 +65,22 @@ const getTodos = (todos) => store.getTodosByName(todos).join(', ');
         </button>
         <button
           type="button"
-          @click="deleteNote(props.note.id)"
+          @click.prevent="deleteNote(props.note.id)"
           class="text-red-700 font-medium rounded-lg text-sm px-5"
         >
           Удалить
         </button>
       </div>
     </div>
+    <teleport to="body">
+      <div v-if="isModalOpen">
+        <ConfirmModalComponent
+          :modalData="modalData"
+          @close="isModalOpen = false"
+          :onConfirm="isConfirmed"
+        />
+      </div>
+    </teleport>
   </div>
 </template>
 
