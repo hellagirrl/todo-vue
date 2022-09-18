@@ -1,25 +1,22 @@
 <script setup>
 import { useUserStore } from '../stores/index.js';
-import { useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import ConfirmModalComponent from '@/components/ConfirmModalComponent.vue';
 import DeleteSVG from '../assets/icons/delete.svg';
-import ConfirmSVG from '../assets/icons/confirm.svg';
 import SaveSVG from '../assets/icons/save.svg';
 import UndoSVG from '../assets/icons/undo.svg';
 import RemoveSVG from '../assets/icons/remove.svg';
 import RepeatSVG from '../assets/icons/repeat.svg';
 import AddSVG from '../assets/icons/add.svg';
 import { ref } from 'vue';
-// import { computed } from 'vue';
 
 const store = useUserStore();
+const router = useRouter();
 const route = useRoute();
 
 // current note to return to in case the user decides to undo all the changes
 const currentNote = store.getSpecificNote(route.params.name);
-// const currentNoteTodos = computed(() =>
-//   store.getTodosByName(currentNote.todos)
-// );
+const tempNote = currentNote;
 
 const getField = (e) => {
   let text = e.target.innerText;
@@ -45,8 +42,27 @@ function updateContent(e, contentType) {
 }
 
 const isModalOpen = ref(false);
+const isConfirmed = ref(null);
+const modalData = ref(null);
+
 const showTodoInput = ref(false);
 const todoName = ref('');
+
+const confirmation = () => {
+  isModalOpen.value = true;
+  return new Promise((resolve, reject) => {
+    isConfirmed.value = resolve;
+  });
+};
+
+const removeTodo = async (todoToRemove) => {
+  modalData.value = 'todo';
+  await confirmation().then(() => {
+    currentNote.todos.splice(todoToRemove, 1);
+  });
+  isModalOpen.value = false;
+  modalData.value = null;
+};
 
 const addNewTodo = () => {
   if (todoName.value?.length) {
@@ -56,16 +72,27 @@ const addNewTodo = () => {
   showTodoInput.value = false;
 };
 
-const removeTodo = (todoToRemove) => {
-  // currentNote.todos = currentNote.todos.filter(
-  //   (todo) => todo.name != todoToRemove.name
-  // );
-  currentNote.todos.splice(todoToRemove, 1);
+const undoEditing = async () => {
+  modalData.value = null;
+  await confirmation().then(() => {
+    // if isConfirmed
+  });
+  isModalOpen.value = false;
+  router.push('/');
 };
 
 const markAsDone = (doneTodo) => {
   const todoToMark = currentNote.todos.find((todo) => todo.name == doneTodo);
   todoToMark.completed = !todoToMark.completed;
+};
+
+const removeNote = async (noteToRemove) => {
+  modalData.value = 'note';
+  await confirmation().then(() => {
+    store.removeNote(noteToRemove);
+    isModalOpen.value = false;
+  });
+  router.push('/');
 };
 </script>
 
@@ -93,6 +120,7 @@ const markAsDone = (doneTodo) => {
               class="svg-title cursor-pointer mr-4 opacity-50 hover:opacity-100"
             />
             <RemoveSVG
+              @click.prevent="removeNote(currentNote)"
               class="svg-title text-red-500 cursor-pointer opacity-50 hover:opacity-100"
             />
           </div>
@@ -109,6 +137,7 @@ const markAsDone = (doneTodo) => {
               value=""
               name="bordered-checkbox"
               class="w-4 h-4 cursor-pointer"
+              @change="markAsDone(todo.name)"
             />
             <p
               contenteditable
@@ -121,10 +150,13 @@ const markAsDone = (doneTodo) => {
             </p>
           </div>
           <div class="flex flex-row">
+            <!---
             <ConfirmSVG
               class="svg-todo cursor-pointer mr-4 opacity-50 hover:opacity-100"
               @click.prevent="markAsDone(todo.name)"
             />
+            ----->
+
             <DeleteSVG
               class="svg-todo cursor-pointer opacity-50 hover:opacity-100"
               @click.prevent="removeTodo(id)"
@@ -153,7 +185,7 @@ const markAsDone = (doneTodo) => {
           <button
             type="button"
             class="text-red-700 font-medium rounded-lg text-sm pt-2 mt-2"
-            @click.prevent="isModalOpen = true"
+            @click.prevent="undoEditing"
           >
             Отменить редактирование
           </button>
@@ -162,7 +194,11 @@ const markAsDone = (doneTodo) => {
     </div>
     <teleport to="body">
       <div v-if="isModalOpen">
-        <ConfirmModalComponent @close="isModalOpen = false" />
+        <ConfirmModalComponent
+          :modalData="modalData"
+          @close="isModalOpen = false"
+          :onConfirm="isConfirmed"
+        />
       </div>
     </teleport>
   </div>

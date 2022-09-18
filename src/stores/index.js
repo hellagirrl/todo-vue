@@ -5,6 +5,7 @@ export const useUserStore = defineStore('userStore', {
     return {
       notes: [
         {
+          id: 0,
           name: 'Start Marathon Prep',
           todos: [
             {
@@ -53,6 +54,9 @@ export const useUserStore = defineStore('userStore', {
   },
   getters: {
     getNotes: (state) => state.notes,
+    getSpecificNoteById: (state) => {
+      return (id) => state.notes.find((note) => note.id == id);
+    },
     getSpecificNote: (state) => {
       return (noteName) =>
         state.notes.find((note) => note.name.toLowerCase() == noteName);

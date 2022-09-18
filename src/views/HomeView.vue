@@ -6,10 +6,12 @@ const store = useUserStore();
 
 const noteName = ref('');
 const listOfTodos = ref('');
+let id = 1;
 
 function addNewNote() {
   if (noteName.value.trim().length && listOfTodos.value.trim().length) {
     const noteToAdd = reactive({
+      id: id++,
       name: noteName.value,
       todos: listOfTodos.value
         .split(', ')

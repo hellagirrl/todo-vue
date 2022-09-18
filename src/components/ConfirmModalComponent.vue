@@ -1,9 +1,11 @@
 <script setup>
-defineProps({
-  modalActive: Boolean,
-});
+const props = defineProps(['onConfirm', 'modalData']);
 
-defineEmits(['close', 'confirm']);
+defineEmits(['close']);
+
+const confirm = () => {
+  if (props.onConfirm) props.onConfirm();
+};
 </script>
 
 <template>
@@ -16,11 +18,14 @@ defineEmits(['close', 'confirm']);
         <div class="relative bg-white rounded-lg shadow">
           <div class="p-6 text-center">
             <h3 class="mb-5 text-lg font-normal text-gray-500">
-              Отменить редактирование?
+              <slot v-if="modalData == null">Отменить редактирование?</slot>
+              <slot v-if="modalData == 'note'">Удалить заметку?</slot>
+              <slot v-if="modalData == 'todo'">Удалить эту задачу?</slot>
             </h3>
             <button
               type="button"
               class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+              @click="confirm"
             >
               Да
             </button>
