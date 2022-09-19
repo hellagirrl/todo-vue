@@ -1,6 +1,6 @@
 ## About
 
-A simple To-Do App made with Vue 3 Composition Api, Vite and Tailwind [not finished yet].
+A simple To-Do App made with Vue 3 Composition Api, Pinia, Vite and Tailwind [not finished yet].
 
 ## What you can do with it:
 
