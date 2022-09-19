@@ -1,35 +1,27 @@
-# vue-todo
+## About
 
-This template should help get you started developing with Vue 3 in Vite.
+A simple To-Do App made with Vue 3 Composition Api, Vite and Tailwind [not finished yet].
 
-## Recommended IDE Setup
+## What you can do with it:
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- Add a Note with To-Dos
+- Delete Note from The Main Page ('Delete' button) or Note View Page (the 'Trash' icon)
+- Add New To-Dos to The Note
+- Mark To-Dos as done / not done
+- Save Changes on The Note (green 'check' button)
+  If you just leave / refresh the page changes won't be saved.
 
-## Customize configuration
+## What to add:
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- Debounce on Input (for contenteditable implementation)
+- Undo / redo (https://vuejs-course.com/blog/immutability-implementing-undo-and-redo)
+- Fix localStorage reactivity
+- Adaptive design (half done)
 
-## Project Setup
+## Installation
 
-```sh
-npm install
-```
+To check The Project Yourself, follow these steps:
 
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+1. Clone The Repo
+2. Open Cloned Folder in Your IDE and Type In The Terminal `npm install`
+3. Run `npm run dev`
