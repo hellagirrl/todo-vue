@@ -15,7 +15,6 @@ A simple To-Do App made with Vue 3 Composition Api, Vite and Tailwind [not finis
 
 - Debounce on Input (for contenteditable implementation)
 - Undo / redo (https://vuejs-course.com/blog/immutability-implementing-undo-and-redo)
-- Fix localStorage reactivity
 - Adaptive design (half done)
 
 ## Installation

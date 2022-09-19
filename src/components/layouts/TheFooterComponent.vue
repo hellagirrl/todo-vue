@@ -1,12 +1,13 @@
 <template>
   <footer class="text-gray-700 bg-white border-t body-font mt-auto">
     <div class="container flex flex-row py-6 justify-between">
-      <div class="text-base">
-        <p class="text-sm text-center text-gray-500">have fun with the app</p>
-      </div>
+      <p class="text-sm text-center text-gray-500">have fun with the app</p>
       <div class="mx-5">
-        <a href="https://github.com/hellagirrl" target="_blank">
-          <!-- github icon-->
+        <a
+          href="https://github.com/hellagirrl/todo-vue"
+          class="text-gray-800 hover:text-gray-400"
+          target="_blank"
+        >
           Github
         </a>
       </div>

@@ -8,19 +8,86 @@ import UndoSVG from '../assets/icons/undo.svg';
 import RemoveSVG from '../assets/icons/remove.svg';
 import RepeatSVG from '../assets/icons/repeat.svg';
 import AddSVG from '../assets/icons/add.svg';
-import { onUnmounted, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const store = useUserStore();
 const router = useRouter();
 const route = useRoute();
 
-onUnmounted(() => store.saveNotes());
-// current note to return to in case the user decides to undo all the changes
-const currentNote = store.getSpecificNote(route.params.name);
-onMounted(() => console.log(currentNote));
+// Loading Data from localStorage
+store.loadNotes();
 
-const tempNote = currentNote;
-let changes = ref([tempNote]);
+// Get Current Note To Load on a Page
+const currentNote = computed(() => store.getSpecificNoteById(route.params.id));
+
+const isModalOpen = ref(false);
+const isConfirmed = ref(null);
+const modalData = ref(null);
+
+const showTodoInput = ref(false);
+const todoName = ref('');
+
+// Confirmation from Modal
+const confirmation = () => {
+  isModalOpen.value = true;
+  return new Promise((resolve, reject) => {
+    isConfirmed.value = resolve;
+  });
+};
+
+// To-Do Manipulation
+const removeTodo = async (todoToRemove) => {
+  modalData.value = 'todo';
+  await confirmation().then(() => {
+    currentNote.value.todos.splice(todoToRemove, 1);
+  });
+  isModalOpen.value = false;
+  modalData.value = null;
+};
+
+const addNewTodo = () => {
+  if (todoName.value?.length) {
+    currentNote.value.todos.push({ name: todoName.value, completed: false });
+  }
+  todoName.value = null;
+  showTodoInput.value = false;
+};
+
+const markAsDone = (doneTodo) => {
+  const todoToMark = currentNote.value.todos.find(
+    (todo) => todo.name == doneTodo
+  );
+  todoToMark.completed = !todoToMark.completed;
+};
+
+// Note Manipulation
+const removeNote = async (noteToRemove) => {
+  modalData.value = 'note';
+  await confirmation().then(() => {
+    store.removeNote(noteToRemove.id);
+    isModalOpen.value = false;
+  });
+  router.push('/');
+};
+
+const saveNote = (noteToSave) => {
+  store.saveNote(noteToSave);
+  router.push('/');
+};
+
+const undoEditing = async () => {
+  modalData.value = null;
+  await confirmation();
+  isModalOpen.value = false;
+  router.push('/');
+};
+
+// TODO: all the code below is for undo & redo [not done yet]
+
+// Creating Deep Copy Object to avoid Reactive changes
+const initialNoteState = JSON.parse(
+  JSON.stringify(store.getSpecificNoteById(route.params.id))
+);
 
 const getField = (e) => {
   let text = e.target.innerText;
@@ -44,64 +111,6 @@ function updateContent(e, contentType) {
       break;
   }
 }
-
-const isModalOpen = ref(false);
-const isConfirmed = ref(null);
-const modalData = ref(null);
-
-const showTodoInput = ref(false);
-const todoName = ref('');
-
-const confirmation = () => {
-  isModalOpen.value = true;
-  return new Promise((resolve, reject) => {
-    isConfirmed.value = resolve;
-  });
-};
-
-const removeTodo = async (todoToRemove) => {
-  modalData.value = 'todo';
-  await confirmation().then(() => {
-    currentNote.todos.splice(todoToRemove, 1);
-  });
-  isModalOpen.value = false;
-  modalData.value = null;
-};
-
-const addNewTodo = () => {
-  if (todoName.value?.length) {
-    currentNote.todos.push({ name: todoName.value, completed: false });
-  }
-  todoName.value = null;
-  showTodoInput.value = false;
-};
-
-const undoEditing = async () => {
-  modalData.value = null;
-  await confirmation().then(() => {
-    // if isConfirmed
-  });
-  isModalOpen.value = false;
-  router.push('/');
-};
-
-const markAsDone = (doneTodo) => {
-  const todoToMark = currentNote.todos.find((todo) => todo.name == doneTodo);
-  todoToMark.completed = !todoToMark.completed;
-};
-
-const removeNote = async (noteToRemove) => {
-  modalData.value = 'note';
-  await confirmation().then(() => {
-    store.removeNote(noteToRemove.id);
-    isModalOpen.value = false;
-  });
-  router.push('/');
-};
-
-const saveNote = () => {
-  store.saveNote(currentNote);
-};
 </script>
 
 <template>

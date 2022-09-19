@@ -1,17 +1,18 @@
 <script setup>
-import { ref, onUnmounted } from 'vue';
+import { ref, onUnmounted, onMounted } from 'vue';
 import NoteListComponent from '../components/notes/NoteListComponent.vue';
 import { useUserStore } from '../stores';
 import { uuid } from 'vue-uuid';
 
 const store = useUserStore();
 
+onMounted(() => store.loadNotes());
 onUnmounted(() => store.saveNotes());
 
 const noteName = ref('');
 const listOfTodos = ref('');
 
-function addNewNote() {
+const addNewNote = () => {
   if (noteName.value.trim().length && listOfTodos.value.trim().length) {
     const noteToAdd = {
       id: uuid.v1(),
@@ -25,7 +26,7 @@ function addNewNote() {
 
   noteName.value = '';
   listOfTodos.value = '';
-}
+};
 </script>
 
 <template>

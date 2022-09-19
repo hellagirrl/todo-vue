@@ -16,7 +16,7 @@ onUnmounted(() => store.saveNotes());
 const openNote = (note) => {
   router.push({
     name: 'note',
-    params: { name: note.name.toLowerCase() },
+    params: { id: note.id },
   });
 };
 const getTodos = (todos) => store.getTodosByName(todos).join(', ');
