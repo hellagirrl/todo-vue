@@ -17,6 +17,8 @@ A simple To-Do App made with Vue 3 Composition Api, Vite and Tailwind [not finis
 - Undo / redo (https://vuejs-course.com/blog/immutability-implementing-undo-and-redo)
 - Adaptive design (half done)
 
+! **GitHub doesn't support SPA so that's why on page refresh (in NoteView) app crashes. It doesn't happen if you run the project locally, but it's fixable as well** !
+
 ## Installation
 
 To check The Project Yourself, follow these steps:
