@@ -38,9 +38,7 @@ const confirmation = () => {
 // To-Do Manipulation
 const removeTodo = async (todoToRemove) => {
   modalData.value = 'todo';
-  await confirmation().then(() => {
-    currentNote.value.todos.splice(todoToRemove, 1);
-  });
+  currentNote.value.todos.splice(todoToRemove, 1);
   isModalOpen.value = false;
   modalData.value = null;
 };

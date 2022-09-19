@@ -20,7 +20,6 @@ const confirm = () => {
             <h3 class="mb-5 text-lg font-normal text-gray-500">
               <slot v-if="modalData == null">Отменить редактирование?</slot>
               <slot v-if="modalData == 'note'">Удалить заметку?</slot>
-              <slot v-if="modalData == 'todo'">Удалить эту задачу?</slot>
             </h3>
             <button
               type="button"
