@@ -168,13 +168,6 @@ function updateContent(e, contentType) {
             </p>
           </div>
           <div class="flex flex-row">
-            <!---
-            <ConfirmSVG
-              class="svg-todo cursor-pointer mr-4 opacity-50 hover:opacity-100"
-              @click.prevent="markAsDone(todo.name)"
-            />
-            ----->
-
             <DeleteSVG
               class="svg-todo cursor-pointer opacity-50 hover:opacity-100"
               @click.prevent="removeTodo(id)"
@@ -232,8 +225,3 @@ function updateContent(e, contentType) {
   height: 25px;
 }
 </style>
-
-<!--
-  TODO: 
-  - [] Add debounce on input el ?
--->

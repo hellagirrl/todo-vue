@@ -1,3 +1,5 @@
+<script setup></script>
+
 <template>
   <footer class="text-gray-700 bg-white border-t body-font mt-auto">
     <div class="container flex flex-row py-6 justify-between">
@@ -14,9 +16,5 @@
     </div>
   </footer>
 </template>
-
-<script>
-export default {};
-</script>
 
 <style></style>
