@@ -4,7 +4,7 @@ import { useUserStore } from '@/stores/index.js';
 import { computed } from 'vue';
 const store = useUserStore();
 
-const notes = computed(() => store.getNotes);
+const notes = computed(() => store.loadNotes);
 </script>
 
 <template>

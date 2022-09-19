@@ -8,19 +8,23 @@ import UndoSVG from '../assets/icons/undo.svg';
 import RemoveSVG from '../assets/icons/remove.svg';
 import RepeatSVG from '../assets/icons/repeat.svg';
 import AddSVG from '../assets/icons/add.svg';
-import { ref } from 'vue';
+import { onUnmounted, onMounted, ref } from 'vue';
 
 const store = useUserStore();
 const router = useRouter();
 const route = useRoute();
 
+onUnmounted(() => store.saveNotes());
 // current note to return to in case the user decides to undo all the changes
 const currentNote = store.getSpecificNote(route.params.name);
+onMounted(() => console.log(currentNote));
+
 const tempNote = currentNote;
+let changes = ref([tempNote]);
 
 const getField = (e) => {
   let text = e.target.innerText;
-  console.log(text);
+  console.log(text, 'text');
 };
 
 function updateContent(e, contentType) {
@@ -30,11 +34,11 @@ function updateContent(e, contentType) {
   switch (contentType) {
     case 'noteName':
       newNoteName = inputText;
-      console.log(newNoteName);
+      console.log(newNoteName, 'inputchange');
       break;
     case 'todo':
       todo = inputText;
-      console.log(todo);
+      console.log(todo, 'inputchange');
       break;
     default:
       break;
@@ -94,6 +98,10 @@ const removeNote = async (noteToRemove) => {
   });
   router.push('/');
 };
+
+const saveNote = () => {
+  store.saveNote(currentNote);
+};
 </script>
 
 <template>
@@ -112,6 +120,7 @@ const removeNote = async (noteToRemove) => {
           <div class="flex flex-row justify-between">
             <SaveSVG
               class="svg-title text-green-500 cursor-pointer mr-4 opacity-50 hover:opacity-100"
+              @click.prevent="saveNote(currentNote)"
             />
             <UndoSVG
               class="svg-title cursor-pointer mr-4 opacity-50 hover:opacity-100"
@@ -134,10 +143,10 @@ const removeNote = async (noteToRemove) => {
             <input
               id="bordered-checkbox-1"
               type="checkbox"
-              value=""
+              v-model="todo.completed"
               name="bordered-checkbox"
               class="w-4 h-4 cursor-pointer"
-              @change="markAsDone(todo.name)"
+              @input="markAsDone(todo.name)"
             />
             <p
               contenteditable

@@ -2,13 +2,16 @@
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/index.js';
 import ConfirmModalComponent from '@/components/ConfirmModalComponent.vue';
-import { ref } from 'vue';
+import { ref, onUnmounted } from 'vue';
+
 const props = defineProps({
   note: Object,
 });
 
 const router = useRouter();
 const store = useUserStore();
+
+onUnmounted(() => store.saveNotes());
 
 const openNote = (note) => {
   router.push({

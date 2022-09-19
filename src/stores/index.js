@@ -53,7 +53,14 @@ export const useUserStore = defineStore('userStore', {
     };
   },
   getters: {
-    getNotes: (state) => state.notes,
+    loadNotes: (state) => {
+      if (localStorage.getItem('notes')) {
+        let usersNotes = JSON.parse(localStorage.getItem('notes'));
+        return usersNotes.length
+          ? (state.notes = [...usersNotes])
+          : state.notes;
+      }
+    },
     getSpecificNoteById: (state) => {
       return (id) => state.notes.find((note) => note.id == id);
     },
@@ -66,11 +73,24 @@ export const useUserStore = defineStore('userStore', {
     },
   },
   actions: {
+    saveNotes() {
+      const storageData = JSON.stringify(this.notes);
+      localStorage.setItem('notes', storageData);
+    },
     addNote(newNote) {
       this.notes.push(newNote);
+      this.saveNotes();
     },
     removeNote(noteIdToRemove) {
       this.notes = this.notes.filter((note) => note.id !== noteIdToRemove);
+      this.saveNotes();
+    },
+    saveNote(noteToSave) {
+      const currentNote = this.notes.find((note) => note.id == noteToSave.id);
+      console.log(currentNote);
+      console.log(noteToSave);
+
+      Object.assign(currentNote, noteToSave);
     },
   },
 });

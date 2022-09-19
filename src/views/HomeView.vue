@@ -1,22 +1,25 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { ref, onUnmounted } from 'vue';
 import NoteListComponent from '../components/notes/NoteListComponent.vue';
 import { useUserStore } from '../stores';
+import { uuid } from 'vue-uuid';
+
 const store = useUserStore();
+
+onUnmounted(() => store.saveNotes());
 
 const noteName = ref('');
 const listOfTodos = ref('');
-let id = 1;
 
 function addNewNote() {
   if (noteName.value.trim().length && listOfTodos.value.trim().length) {
-    const noteToAdd = reactive({
-      id: id++,
+    const noteToAdd = {
+      id: uuid.v1(),
       name: noteName.value,
       todos: listOfTodos.value
         .split(', ')
         .map((todo) => ({ name: todo, completed: false })),
-    });
+    };
     store.addNote(noteToAdd);
   }
 
