@@ -109,7 +109,7 @@ function updateContent(e, contentType) {
 </script>
 
 <template>
-  <div class="container">
+  <div class="px-4 md:container">
     <div class="relative h-full rounded-md flex items-start bg-gray-100 p-8">
       <div class="flex-grow">
         <div class="flex flex-row justify-between border-b">
