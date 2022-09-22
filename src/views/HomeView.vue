@@ -6,7 +6,10 @@ import { uuid } from 'vue-uuid';
 
 const store = useUserStore();
 
-onMounted(() => store.loadNotes());
+onMounted(() => {
+  store.loadNotes();
+  document.title = 'Your Notes';
+});
 onUnmounted(() => store.saveNotes());
 
 const noteName = ref('');

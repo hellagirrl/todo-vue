@@ -8,7 +8,7 @@ import UndoSVG from '../assets/icons/undo.svg';
 import RemoveSVG from '../assets/icons/remove.svg';
 import RepeatSVG from '../assets/icons/repeat.svg';
 import AddSVG from '../assets/icons/add.svg';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const store = useUserStore();
 const router = useRouter();
@@ -19,6 +19,11 @@ store.loadNotes();
 
 // Get Current Note To Load on a Page
 const currentNote = computed(() => store.getSpecificNoteById(route.params.id));
+
+// Dynamically change the title
+onMounted(() => {
+  document.title = currentNote.value.name;
+});
 
 const isModalOpen = ref(false);
 const isConfirmed = ref(null);
