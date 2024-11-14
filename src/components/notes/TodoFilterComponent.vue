@@ -6,6 +6,7 @@ const store = useNoteStore();
 
 const filters = ['All', 'Active', 'Completed'];
 const todoFilter = computed(() => store.getCurrentFilter);
+const unfinishedTodos = computed(() => store.getActiveCurrentTodos.length);
 
 const changeFilter = (filterType) => {
   store.setFilter(filterType);
@@ -27,6 +28,8 @@ const changeFilter = (filterType) => {
       class="px-4 py-2 ml-2 font-medium rounded-lg transition duration-300 ease-in-out hover:shadow-lg"
     >
       {{ filterType }}
+
+      <span v-if="filterType === 'Active' && !!unfinishedTodos">({{ unfinishedTodos }})</span>
     </button>
   </div>
 </template>
