@@ -24,6 +24,6 @@ LocalStorage is used as databse.
 To check The Project Yourself, follow these steps:
 
 1. Clone The Repo
-1.1. Optionally create `nodeenv` environment to not install all of this globally
-2. Open Cloned Folder in Your IDE and Type In The Terminal `npm install`
-3. Run `npm run dev`
+2. Optionally create `nodeenv` environment to not install all of this globally
+3. Open Cloned Folder in Your IDE and Type In The Terminal `npm install`
+4. Run `npm run dev`
