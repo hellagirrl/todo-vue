@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-export const useUserStore = defineStore('userStore', {
+export const useNoteStore = defineStore('noteStore', {
   state: () => {
     return {
       notes: [
@@ -23,6 +23,7 @@ export const useUserStore = defineStore('userStore', {
           ],
         },
       ],
+      currentNote: null,
     };
   },
   getters: {
@@ -33,8 +34,20 @@ export const useUserStore = defineStore('userStore', {
     getTodosByName: () => {
       return (todos) => todos.map((todo) => todo.name);
     },
+    getAllCurrentTodos(state) {
+      return state.currentNote ? state.currentNote.todos : [];
+    },
+    getActiveCurrentTodos: (state) => {
+      return state.currentNote ? state.currentNote.todos.filter((todo) => !todo.completed) : [];
+    },
+    getCompletedCurrentTodos: (state) => {
+      return state.currentNote ? state.currentNote.todos.filter((todo) => todo.completed) : [];
+    },
   },
   actions: {
+    setCurrentNote(noteId) {
+      this.currentNote = this.notes.find((note) => note.id == noteId);
+    },
     saveNotes() {
       const storageData = JSON.stringify(this.notes);
       localStorage.setItem('notes', storageData);

@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router';
-import { useUserStore } from '@/stores/index.js';
+import { useNoteStore } from '@/stores/index.js';
 import ConfirmModalComponent from '@/components/ConfirmModalComponent.vue';
 import { ref, onUnmounted } from 'vue';
 
@@ -9,7 +9,7 @@ const props = defineProps({
 });
 
 const router = useRouter();
-const store = useUserStore();
+const store = useNoteStore();
 
 onUnmounted(() => store.saveNotes());
 

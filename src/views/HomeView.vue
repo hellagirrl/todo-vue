@@ -1,10 +1,10 @@
 <script setup>
 import { ref, onUnmounted, onMounted } from 'vue';
 import NoteListComponent from '../components/notes/NoteListComponent.vue';
-import { useUserStore } from '../stores';
+import { useNoteStore } from '../stores';
 import { uuid } from 'vue-uuid';
 
-const store = useUserStore();
+const store = useNoteStore();
 
 onMounted(() => {
   store.loadNotes();

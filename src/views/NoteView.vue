@@ -1,28 +1,23 @@
 <script setup>
-import { useUserStore } from '../stores/index.js';
+import { useNoteStore } from '../stores/index.js';
 import { useRouter, useRoute } from 'vue-router';
 import ConfirmModalComponent from '@/components/ConfirmModalComponent.vue';
 import DeleteSVG from '../assets/icons/delete.svg';
 import SaveSVG from '../assets/icons/save.svg';
-import UndoSVG from '../assets/icons/undo.svg';
 import RemoveSVG from '../assets/icons/remove.svg';
-import RepeatSVG from '../assets/icons/repeat.svg';
 import AddSVG from '../assets/icons/add.svg';
 import { computed, onMounted, ref } from 'vue';
 
-const store = useUserStore();
+const store = useNoteStore();
 const router = useRouter();
 const route = useRoute();
 
 // Loading Data from localStorage
 store.loadNotes();
+store.setCurrentNote(route.params.id);
 
-// Get Current Note To Load on a Page
-const currentNote = computed(() => store.getSpecificNoteById(route.params.id));
-
-// Dynamically change the title
 onMounted(() => {
-  document.title = currentNote.value.name;
+  document.title = store.currentNote.name;
 });
 
 const isModalOpen = ref(false);
@@ -31,6 +26,8 @@ const modalData = ref(null);
 
 const showTodoInput = ref(false);
 const todoName = ref('');
+const todoFilter = ref('All');
+// const filteredTodos = ref(store.currentNote.todos);
 
 // Confirmation from Modal
 const confirmation = () => {
@@ -42,23 +39,36 @@ const confirmation = () => {
 
 // To-Do Manipulation
 const removeTodo = async (todoToRemove) => {
-  currentNote.value.todos.splice(todoToRemove, 1);
+  store.currentNote.todos.splice(todoToRemove, 1);
 };
 
 const addNewTodo = () => {
   if (todoName.value?.length) {
-    currentNote.value.todos.push({ name: todoName.value, completed: false });
+    store.currentNote.todos.push({ name: todoName.value, completed: false });
   }
   todoName.value = null;
   showTodoInput.value = false;
 };
 
 const markAsDone = (doneTodo) => {
-  const todoToMark = currentNote.value.todos.find(
-    (todo) => todo.name == doneTodo
+  const todoToMark = store.currentNote.todos.find(
+    (todo) => todo.name === doneTodo
   );
   todoToMark.completed = !todoToMark.completed;
 };
+
+const undoTodoAddition = () => {
+  todoName.value = null;
+  showTodoInput.value = false;
+};
+
+const filteredTodos = computed(() => {
+  switch (todoFilter.value) {
+    case 'Active': return store.currentNote.todos.filter(todo => !todo.completed);
+    case 'Completed': return store.currentNote.todos.filter(todo => todo.completed);
+    default: return store.currentNote.todos;
+  }
+});
 
 // Note Manipulation
 const removeNote = async (noteToRemove) => {
@@ -85,9 +95,9 @@ const undoEditing = async () => {
 // TODO: all the code below is for undo & redo [not done yet]
 
 // Creating Deep Copy Object to avoid Reactive changes
-const initialNoteState = JSON.parse(
-  JSON.stringify(store.getSpecificNoteById(route.params.id))
-);
+// const initialNoteState = JSON.parse(
+//   JSON.stringify(store.getSpecificNoteById(route.params.id))
+// );
 
 const getField = (e) => {
   let text = e.target.innerText;
@@ -124,28 +134,22 @@ function updateContent(e, contentType) {
             @click.prevent="getField"
             class="text-3xl pl-2 font-medium text-gray-900 mb-6"
           >
-            {{ currentNote.name }}
+            {{ store.currentNote.name }}
           </h1>
           <div class="flex flex-row justify-between">
             <SaveSVG
               class="svg-title text-green-500 cursor-pointer mr-4 opacity-50 hover:opacity-100"
-              @click.prevent="saveNote(currentNote)"
-            />
-            <UndoSVG
-              class="svg-title cursor-pointer mr-4 opacity-50 hover:opacity-100"
-            />
-            <RepeatSVG
-              class="svg-title cursor-pointer mr-4 opacity-50 hover:opacity-100"
+              @click.prevent="saveNote(store.currentNote)"
             />
             <RemoveSVG
-              @click.prevent="removeNote(currentNote)"
+              @click.prevent="removeNote(store.currentNote)"
               class="svg-title text-red-500 cursor-pointer opacity-50 hover:opacity-100"
             />
           </div>
         </div>
         <div
           class="flex justify-between mb-4 mt-4 pt-2 border-b pb-4"
-          v-for="(todo, id) in currentNote.todos"
+          v-for="(todo, id) in filteredTodos"
           :key="id"
         >
           <div class="flex flex-row items-center">
@@ -184,21 +188,44 @@ function updateContent(e, contentType) {
           />
         </button>
         <input
-          required
           class="shadow appearance-none border rounded w-full py-2 pl-3 text-gray-700 text-sm leading-tight focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 mr-8"
           type="text"
           v-model="todoName"
           placeholder="Добавьте новую задачу"
           v-if="showTodoInput"
           @keyup.enter="addNewTodo"
+          @blur="undoTodoAddition"
         />
         <div class="flex flex-row justify-end">
           <button
             type="button"
-            class="text-red-700 font-medium rounded-lg text-sm pt-2 mt-2"
+            @click="todoFilter = 'All'"
+            :class="{ 'bg-[#7192BE] text-white': todoFilter === 'All' }"
+            class="px-4 py-2 rounded-lg transition duration-300 ease-in-out hover:bg-[#7192BE] hover:shadow-lg hover:text-white"
+          >
+            All
+          </button>
+          <button
+            @click="todoFilter = 'Active'"
+            :class="{ 'bg-[#32936F] text-white': todoFilter === 'Active' }"
+            class="px-4 py-2 ml-2 font-medium rounded-lg transition duration-300 ease-in-out hover:bg-[#32936F] hover:shadow-lg hover:text-white"
+          >
+            Active
+          </button>
+          <button
+            @click="todoFilter = 'Completed'"
+            :class="{ 'shadow-lg bg-[#941C2F] text-white': todoFilter === 'Completed' }"
+            class="px-4 py-2 ml-2 rounded-lg transition duration-300 ease-in-out hover:bg-[#941C2F] hover:text-white hover:shadow-lg"
+          >
+            Completed
+          </button>
+
+          <button
+            type="button"
+            class="px-4 py-2 ml-2 font-medium rounded-lg text-[#941C2F]"
             @click.prevent="undoEditing"
           >
-            Отменить редактирование
+            Cancel
           </button>
         </div>
       </div>
