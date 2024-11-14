@@ -28,7 +28,7 @@ const modalData = ref(null);
 const deleteNote = async (note) => {
   modalData.value = 'note';
   isModalOpen.value = true;
-  await new Promise((resolve, reject) => {
+  await new Promise((resolve) => {
     isConfirmed.value = resolve;
   });
   store.removeNote(note);
@@ -53,7 +53,8 @@ const deleteNote = async (note) => {
           @click="openNote(props.note)"
           class="text-blue-500 inline-flex items-center cursor-pointer"
         >
-          Далее<svg
+          Check the note
+          <svg
             class="w-4 h-4 ml-2"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -71,7 +72,7 @@ const deleteNote = async (note) => {
           @click.prevent="deleteNote(props.note.id)"
           class="text-red-700 font-medium rounded-lg text-sm px-5"
         >
-          Удалить
+          Delete
         </button>
       </div>
     </div>

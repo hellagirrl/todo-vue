@@ -1,24 +1,19 @@
 <script setup>
-import { useNoteStore } from '../stores/index.js';
+import { computed, onMounted, ref } from 'vue';
+import { useNoteStore } from '@/stores/index.js';
 import { useRouter, useRoute } from 'vue-router';
 import ConfirmModalComponent from '@/components/ConfirmModalComponent.vue';
-import DeleteSVG from '../assets/icons/delete.svg';
-import SaveSVG from '../assets/icons/save.svg';
-import RemoveSVG from '../assets/icons/remove.svg';
-import AddSVG from '../assets/icons/add.svg';
-import { computed, onMounted, ref } from 'vue';
+import DeleteSVG from '@/assets/icons/delete.svg';
+import SaveSVG from '@/assets/icons/save.svg';
+import RemoveSVG from '@/assets/icons/remove.svg';
+import AddSVG from '@/assets/icons/add.svg';
 
 const store = useNoteStore();
 const router = useRouter();
 const route = useRoute();
 
-// Loading Data from localStorage
 store.loadNotes();
 store.setCurrentNote(route.params.id);
-
-onMounted(() => {
-  document.title = store.currentNote.name;
-});
 
 const isModalOpen = ref(false);
 const isConfirmed = ref(null);
@@ -27,12 +22,23 @@ const modalData = ref(null);
 const showTodoInput = ref(false);
 const todoName = ref('');
 const todoFilter = ref('All');
-// const filteredTodos = ref(store.currentNote.todos);
+const filters = ['All', 'Active', 'Completed'];
+const filteredTodos = computed(() => {
+  switch (todoFilter.value) {
+    case 'Active': return store.currentNote.todos.filter((todo) => !todo.completed);
+    case 'Completed': return store.currentNote.todos.filter((todo) => todo.completed);
 
-// Confirmation from Modal
+    default: return store.currentNote.todos;
+  }
+});
+
+onMounted(() => {
+  document.title = store.currentNote.name;
+});
+
 const confirmation = () => {
   isModalOpen.value = true;
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     isConfirmed.value = resolve;
   });
 };
@@ -61,14 +67,6 @@ const undoTodoAddition = () => {
   todoName.value = null;
   showTodoInput.value = false;
 };
-
-const filteredTodos = computed(() => {
-  switch (todoFilter.value) {
-    case 'Active': return store.currentNote.todos.filter(todo => !todo.completed);
-    case 'Completed': return store.currentNote.todos.filter(todo => todo.completed);
-    default: return store.currentNote.todos;
-  }
-});
 
 // Note Manipulation
 const removeNote = async (noteToRemove) => {
@@ -191,7 +189,7 @@ function updateContent(e, contentType) {
           class="shadow appearance-none border rounded w-full py-2 pl-3 text-gray-700 text-sm leading-tight focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 mr-8"
           type="text"
           v-model="todoName"
-          placeholder="Добавьте новую задачу"
+          placeholder="Add new todo item"
           v-if="showTodoInput"
           @keyup.enter="addNewTodo"
           @blur="undoTodoAddition"
@@ -199,25 +197,17 @@ function updateContent(e, contentType) {
         <div class="flex flex-row justify-end">
           <button
             type="button"
-            @click="todoFilter = 'All'"
-            :class="{ 'bg-[#7192BE] text-white': todoFilter === 'All' }"
-            class="px-4 py-2 rounded-lg transition duration-300 ease-in-out hover:bg-[#7192BE] hover:shadow-lg hover:text-white"
+            v-for="filterType in filters"
+            :key="filterType"
+            @click="todoFilter = filterType"
+            :class="{
+                'bg-[#7192BE] text-white': filterType === 'All' && todoFilter === 'All',
+                'bg-[#32936F] text-white': filterType === 'Active' && todoFilter === 'Active',
+                'bg-[#941C2F] text-white': filterType === 'Completed' && todoFilter === 'Completed',
+            }"
+            class="px-4 py-2 ml-2 font-medium rounded-lg transition duration-300 ease-in-out hover:shadow-lg"
           >
-            All
-          </button>
-          <button
-            @click="todoFilter = 'Active'"
-            :class="{ 'bg-[#32936F] text-white': todoFilter === 'Active' }"
-            class="px-4 py-2 ml-2 font-medium rounded-lg transition duration-300 ease-in-out hover:bg-[#32936F] hover:shadow-lg hover:text-white"
-          >
-            Active
-          </button>
-          <button
-            @click="todoFilter = 'Completed'"
-            :class="{ 'shadow-lg bg-[#941C2F] text-white': todoFilter === 'Completed' }"
-            class="px-4 py-2 ml-2 rounded-lg transition duration-300 ease-in-out hover:bg-[#941C2F] hover:text-white hover:shadow-lg"
-          >
-            Completed
+            {{ filterType }}
           </button>
 
           <button

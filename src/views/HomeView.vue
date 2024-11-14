@@ -10,10 +10,12 @@ onMounted(() => {
   store.loadNotes();
   document.title = 'Your Notes';
 });
+
 onUnmounted(() => store.saveNotes());
 
 const noteName = ref('');
 const listOfTodos = ref('');
+const erroMessage = ref(null);
 
 const addNewNote = () => {
   if (noteName.value.trim().length && listOfTodos.value.trim().length) {
@@ -44,7 +46,7 @@ const addNewNote = () => {
         id="note"
         type="text"
         v-model="noteName"
-        placeholder="Название заметки"
+        placeholder="Note"
       />
       <input
         required
@@ -53,14 +55,14 @@ const addNewNote = () => {
         type="text"
         v-model="listOfTodos"
         @keyup.enter="addNewNote()"
-        placeholder="Задачи"
+        placeholder="Tasks"
       />
       <button
         class="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded mt-3 sm:mt-0"
         type="button"
         @click="addNewNote()"
       >
-        Добавить
+        Submit
       </button>
     </form>
     <NoteListComponent />
