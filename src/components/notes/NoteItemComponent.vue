@@ -39,15 +39,14 @@ const deleteNote = async (note) => {
 
 <template>
   <div class="pt-8 pr-4 lg:w-1/3">
-    <div
-      class="h-full rounded-md flex flex-grow flex-col items-start bg-gray-100 p-8"
-    >
+    <div class="h-full rounded-md flex flex-grow flex-col items-start bg-gray-100 p-8">
       <h1 class="title-font text-xl font-medium text-gray-900 mb-3">
         {{ props.note.name }}
       </h1>
       <p class="leading-relaxed mb-5 opacity-50 flex-grow">
         {{ getTodos(props.note.todos) }}
       </p>
+
       <div class="flex flex-row w-full justify-between">
         <button
           @click="openNote(props.note)"
@@ -67,6 +66,7 @@ const deleteNote = async (note) => {
             <path d="M12 5l7 7-7 7"></path>
           </svg>
         </button>
+
         <button
           type="button"
           @click.prevent="deleteNote(props.note.id)"
@@ -76,6 +76,7 @@ const deleteNote = async (note) => {
         </button>
       </div>
     </div>
+
     <teleport to="body">
       <div v-if="isModalOpen">
         <ConfirmModalComponent
@@ -87,5 +88,3 @@ const deleteNote = async (note) => {
     </teleport>
   </div>
 </template>
-
-<style></style>

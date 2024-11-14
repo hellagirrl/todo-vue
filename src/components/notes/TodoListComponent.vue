@@ -23,10 +23,9 @@ const removeTodo = async (todoToRemove) => {
 };
 
 const addNewTodo = () => {
-  if (todoName.value?.length) {
-    store.currentNote.todos.push({ name: todoName.value, completed: false });
-  }
-  todoName.value = null;
+  if (!todoName.value.trim()) return;
+  store.currentNote.todos.push({ name: todoName.value, completed: false });
+  todoName.value = '';
   showTodoInput.value = false;
 };
 
@@ -79,6 +78,7 @@ const undoTodoAddition = () => {
 
     <button
       type="button"
+      class="my-2"
       v-if="!showTodoInput"
       @click.prevent="showTodoInput = true"
     >
@@ -101,9 +101,5 @@ const undoTodoAddition = () => {
 .svg-todo {
   width: 20px;
   height: 20px;
-}
-.svg-title {
-  width: 25px;
-  height: 25px;
 }
 </style>

@@ -1,9 +1,10 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useNoteStore } from '@/stores/index.js';
 import { useRouter, useRoute } from 'vue-router';
 import ConfirmModalComponent from '@/components/ConfirmModalComponent.vue';
 import TodoListComponent from '@/components/notes/TodoListComponent.vue';
+import TodoFilterComponent from '@/components/notes/TodoFilterComponent.vue';
 import SaveSVG from '@/assets/icons/save.svg';
 import RemoveSVG from '@/assets/icons/remove.svg';
 
@@ -18,9 +19,6 @@ const isModalOpen = ref(false);
 const isConfirmed = ref(null);
 const modalData = ref(null);
 
-const filters = ['All', 'Active', 'Completed'];
-const todoFilter = computed(() => store.getCurrentFilter);
-
 onMounted(() => {
   document.title = store.currentNote.name;
 });
@@ -32,8 +30,6 @@ const confirmation = () => {
   });
 };
 
-
-// Note Manipulation
 const removeNote = async (noteToRemove) => {
   modalData.value = 'note';
   await confirmation().then(() => {
@@ -53,10 +49,6 @@ const undoEditing = async () => {
   await confirmation();
   isModalOpen.value = false;
   router.push('/');
-};
-
-const changeFilter = (filterType) => {
-  store.setFilter(filterType);
 };
 
 // TODO: all the code below is for undo & redo [not done yet]
@@ -118,20 +110,7 @@ function updateContent(e, contentType) {
         <TodoListComponent />
 
         <div class="flex flex-row justify-end">
-          <button
-            type="button"
-            v-for="filterType in filters"
-            :key="filterType"
-            @click="changeFilter(filterType)"
-            :class="{
-                'bg-[#7192BE] text-white': filterType === 'All' && todoFilter === 'All',
-                'bg-[#32936F] text-white': filterType === 'Active' && todoFilter === 'Active',
-                'bg-[#941C2F] text-white': filterType === 'Completed' && todoFilter === 'Completed',
-            }"
-            class="px-4 py-2 ml-2 font-medium rounded-lg transition duration-300 ease-in-out hover:shadow-lg"
-          >
-            {{ filterType }}
-          </button>
+          <TodoFilterComponent />
 
           <button
             type="button"
@@ -143,6 +122,7 @@ function updateContent(e, contentType) {
         </div>
       </div>
     </div>
+
     <teleport to="body">
       <div v-if="isModalOpen">
         <ConfirmModalComponent
@@ -156,10 +136,6 @@ function updateContent(e, contentType) {
 </template>
 
 <style scoped>
-.svg-todo {
-  width: 20px;
-  height: 20px;
-}
 .svg-title {
   width: 25px;
   height: 25px;
