@@ -15,7 +15,7 @@ onUnmounted(() => store.saveNotes());
 
 const noteName = ref('');
 const listOfTodos = ref('');
-const erroMessage = ref(null);
+// TODO: add error handling
 
 const addNewNote = () => {
   if (noteName.value.trim().length && listOfTodos.value.trim().length) {

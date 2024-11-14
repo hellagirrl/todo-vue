@@ -24,6 +24,7 @@ export const useNoteStore = defineStore('noteStore', {
         },
       ],
       currentNote: null,
+      currentFilter: 'All',
     };
   },
   getters: {
@@ -43,6 +44,7 @@ export const useNoteStore = defineStore('noteStore', {
     getCompletedCurrentTodos: (state) => {
       return state.currentNote ? state.currentNote.todos.filter((todo) => todo.completed) : [];
     },
+    getCurrentFilter: (state) => state.currentFilter,
   },
   actions: {
     setCurrentNote(noteId) {
@@ -70,6 +72,9 @@ export const useNoteStore = defineStore('noteStore', {
       const currentNote = this.notes.find((note) => note.id == noteToSave.id);
       Object.assign(currentNote, noteToSave);
       this.saveNotes();
+    },
+    setFilter(filter) {
+      this.currentFilter = filter;
     },
   },
 });
