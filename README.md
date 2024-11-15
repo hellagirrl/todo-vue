@@ -12,11 +12,6 @@ LocalStorage is used as databse.
 - Save Changes on The Note (green 'check' button)
   If you just leave / refresh the page changes won't be saved.
 
-## What to add:
-
-- Debounce on Input (for contenteditable implementation)
-- Undo / redo (https://vuejs-course.com/blog/immutability-implementing-undo-and-redo)
-
 ! **GitHub doesn't support SPA so that's why on page refresh (in NoteView) app crashes. It doesn't happen if you run the project locally, but it's fixable as well** !
 
 ## Installation
@@ -27,3 +22,5 @@ To check The Project Yourself, follow these steps:
 2. Optionally create `nodeenv` environment to not install all of this globally
 3. Open Cloned Folder in Your IDE and Type In The Terminal `npm install`
 4. Run `npm run dev`
+
+Deploy link is (here)[hellagirrl.github.io/todo-vue/].
