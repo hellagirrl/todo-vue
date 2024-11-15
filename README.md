@@ -23,4 +23,4 @@ To check The Project Yourself, follow these steps:
 3. Open Cloned Folder in Your IDE and Type In The Terminal `npm install`
 4. Run `npm run dev`
 
-Deploy link is (here)[hellagirrl.github.io/todo-vue/].
+Deploy link is [here](hellagirrl.github.io/todo-vue/).
