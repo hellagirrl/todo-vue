@@ -1,6 +1,6 @@
 <script setup>
 import NoteItem from './NoteItem.vue';
-import { useNoteStore } from '@/stores/index.js';
+import { useNoteStore } from '@/store/index.js';
 import { computed } from 'vue';
 
 const store = useNoteStore();

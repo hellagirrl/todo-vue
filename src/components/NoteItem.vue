@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router';
-import { useNoteStore } from '@/stores/index.js';
+import { useNoteStore } from '@/store/index.js';
 import ConfirmModal from '@/components/ConfirmModal.vue';
 import { ref, onUnmounted } from 'vue';
 

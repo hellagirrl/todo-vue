@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue';
-import { useNoteStore } from '@/stores/index.js';
+import { useNoteStore } from '@/store/index.js';
 import { uuid } from 'vue-uuid';
 import AddSVG from '@/assets/icons/add.svg';
 import DeleteSVG from '@/assets/icons/delete.svg';

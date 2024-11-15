@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { useNoteStore } from '@/stores/index.js';
+import { useNoteStore } from '@/store/index.js';
 import { useRouter, useRoute } from 'vue-router';
 import ConfirmModal from '@/components/ConfirmModal.vue';
 import TodoList from '@/components/TodoList.vue';

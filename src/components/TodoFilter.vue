@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue';
-import { useNoteStore } from '@/stores/index.js';
+import { useNoteStore } from '@/store/index.js';
 
 const store = useNoteStore();
 

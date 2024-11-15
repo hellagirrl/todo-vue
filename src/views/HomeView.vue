@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onUnmounted, onMounted } from 'vue';
 import NoteList from '@/components/NoteList.vue';
-import { useNoteStore } from '@/stores';
+import { useNoteStore } from '@/store';
 import { uuid } from 'vue-uuid';
 
 const store = useNoteStore();
