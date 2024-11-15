@@ -51,35 +51,10 @@ const undoEditing = async () => {
   router.push('/');
 };
 
-// TODO: all the code below is for undo & redo [not done yet]
-
-// Creating Deep Copy Object to avoid Reactive changes
-// const initialNoteState = JSON.parse(
-//   JSON.stringify(store.getSpecificNoteById(route.params.id))
-// );
-
-const getField = (e) => {
-  let text = e.target.innerText;
-  console.log(text, 'text');
+const handleNoteInput = (id, e) => {
+  const newNoteName = e.target.textContent;
+  store.updateEntityName(id, newNoteName);
 };
-
-function updateContent(e, contentType) {
-  let newNoteName;
-  let todo;
-  const inputText = e.target.innerText;
-  switch (contentType) {
-    case 'noteName':
-      newNoteName = inputText;
-      console.log(newNoteName, 'inputchange');
-      break;
-    case 'todo':
-      todo = inputText;
-      console.log(todo, 'inputchange');
-      break;
-    default:
-      break;
-  }
-}
 </script>
 
 <template>
@@ -89,8 +64,7 @@ function updateContent(e, contentType) {
         <div class="flex flex-row justify-between border-b">
           <h1
             contenteditable
-            @input="updateContent($event, 'noteName')"
-            @click.prevent="getField"
+            @blur="handleNoteInput(store.currentNote.id, $event)"
             class="text-3xl pl-2 font-medium text-gray-900 mb-6"
           >
             {{ store.currentNote.name }}
@@ -98,10 +72,10 @@ function updateContent(e, contentType) {
           <div class="flex flex-row justify-between">
             <SaveSVG
               class="svg-title text-green-500 cursor-pointer mr-4 opacity-50 hover:opacity-100"
-              @click.prevent="saveNote(store.currentNote)"
+              @click="saveNote(store.currentNote)"
             />
             <RemoveSVG
-              @click.prevent="removeNote(store.currentNote)"
+              @click="removeNote(store.currentNote)"
               class="svg-title text-red-500 cursor-pointer opacity-50 hover:opacity-100"
             />
           </div>
@@ -115,7 +89,7 @@ function updateContent(e, contentType) {
           <button
             type="button"
             class="px-4 py-2 ml-2 font-medium rounded-lg text-[#941C2F]"
-            @click.prevent="undoEditing"
+            @click="undoEditing"
           >
             Cancel
           </button>

@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { useNoteStore } from '@/stores/index.js';
+import { uuid } from 'vue-uuid';
 import AddSVG from '@/assets/icons/add.svg';
 import DeleteSVG from '@/assets/icons/delete.svg';
 
@@ -11,34 +12,39 @@ const todoName = ref('');
 const todoFilter = computed(() => store.getCurrentFilter);
 const filteredTodos = computed(() => {
   switch (todoFilter.value) {
-    case 'Active': return store.currentNote.todos.filter((todo) => !todo.completed);
-    case 'Completed': return store.currentNote.todos.filter((todo) => todo.completed);
+    case 'Active': return store.getActiveCurrentTodos;
+    case 'Completed': return store.getCompletedCurrentTodos;
 
-    default: return store.currentNote.todos;
+    default: return store.getAllCurrentTodos;
   }
 });
 
-const removeTodo = async (todoToRemove) => {
-  store.currentNote.todos.splice(todoToRemove, 1);
+const removeTodo = (id) => {
+  store.removeTodo(id);
 };
 
 const addNewTodo = () => {
   if (!todoName.value.trim()) return;
-  store.currentNote.todos.push({ name: todoName.value, completed: false });
+  store.currentNote.todos.push({ id: uuid.v1(), name: todoName.value, completed: false });
   todoName.value = '';
   showTodoInput.value = false;
 };
 
-const markAsDone = (doneTodo) => {
-  const todoToMark = store.currentNote.todos.find(
-    (todo) => todo.name === doneTodo
-  );
-  todoToMark.completed = !todoToMark.completed;
+const markAsDone = (id) => {
+  const todo = store.currentNote.todos.find((t) => t.id === id);
+  if (todo) {
+    todo.completed = !todo.completed;
+  };
 };
 
 const undoTodoAddition = () => {
   todoName.value = null;
   showTodoInput.value = false;
+};
+
+const handleTodoInput = (id, e) => {
+  const newTodoName = e.target.textContent;
+  store.updateEntityName(id, newTodoName, 'todo');
 };
 </script>
 
@@ -46,8 +52,8 @@ const undoTodoAddition = () => {
   <div class="mb-4">
     <div
       class="flex justify-between mb-4 mt-4 pt-2 border-b pb-4"
-      v-for="(todo, id) in filteredTodos"
-      :key="id"
+      v-for="todo in filteredTodos"
+      :key="todo.id"
     >
       <div class="flex flex-row items-center">
         <input
@@ -56,13 +62,12 @@ const undoTodoAddition = () => {
           v-model="todo.completed"
           name="bordered-checkbox"
           class="w-4 h-4 cursor-pointer"
-          @input="markAsDone(todo.name)"
+          @input="markAsDone(todo.id)"
         />
         <p
           contenteditable
-          @input="updateContent($event, 'todo')"
-          @click.prevent="getField"
           class="ml-2 text-md text-gray-900"
+          @blur="handleTodoInput(todo.id, $event)"
           :class="[todo.completed ? 'line-through' : '']"
         >
           {{ todo.name }}
@@ -71,7 +76,7 @@ const undoTodoAddition = () => {
       <div class="flex flex-row">
         <DeleteSVG
           class="svg-todo cursor-pointer opacity-50 hover:opacity-100"
-          @click.prevent="removeTodo(id)"
+          @click="removeTodo(todo.id)"
         />
       </div>
     </div>

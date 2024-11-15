@@ -9,14 +9,17 @@ export const useNoteStore = defineStore('noteStore', {
           name: 'Start Marathon Prep',
           todos: [
             {
+              id: 0,
               name: 'Set Up A Task Tracker',
               completed: false,
             },
             {
+              id: 1,
               name: 'Decide On What Days Am I Gonna Run',
               completed: false,
             },
             {
+              id: 2,
               name: 'Choose What Songs To Listen To',
               completed: false,
             },
@@ -75,6 +78,22 @@ export const useNoteStore = defineStore('noteStore', {
     },
     setFilter(filter) {
       this.currentFilter = filter;
+    },
+    removeTodo(id) {
+      this.currentNote.todos = this.currentNote.todos.filter((todo) => todo.id !== id);
+    },
+    updateEntityName(id, name, type = 'note') {
+      if (type === 'note' && this.currentNote.id === id) {
+        this.currentNote.name = name;
+        return;
+      }
+
+      if (type === 'todo') {
+        const todo = this.currentNote.todos.find((todo) => todo.id === id);
+        if (todo) {
+          todo.name = name;
+        }
+      }
     },
   },
 });
