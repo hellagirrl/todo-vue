@@ -95,5 +95,8 @@ export const useNoteStore = defineStore('noteStore', {
         }
       }
     },
+    clearCompletedTodos() {
+      this.currentNote.todos = this.currentNote.todos.filter((todo) => !todo.completed);
+    },
   },
 });

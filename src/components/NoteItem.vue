@@ -69,7 +69,7 @@ const deleteNote = async (note) => {
 
         <button
           type="button"
-          @click.prevent="deleteNote(props.note.id)"
+          @click="deleteNote(props.note.id)"
           class="text-red-700 font-medium rounded-lg text-sm px-5"
         >
           Delete

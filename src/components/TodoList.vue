@@ -34,7 +34,7 @@ const markAsDone = (id) => {
   const todo = store.currentNote.todos.find((t) => t.id === id);
   if (todo) {
     todo.completed = !todo.completed;
-  };
+  }
 };
 
 const undoTodoAddition = () => {
@@ -85,7 +85,7 @@ const handleTodoInput = (id, e) => {
       type="button"
       class="my-2"
       v-if="!showTodoInput"
-      @click.prevent="showTodoInput = true"
+      @click="showTodoInput = true"
     >
       <AddSVG class="svg-todo cursor-pointer opacity-50 hover:opacity-100" />
     </button>

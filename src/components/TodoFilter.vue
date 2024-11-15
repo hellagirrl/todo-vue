@@ -7,19 +7,23 @@ const store = useNoteStore();
 const filters = ['All', 'Active', 'Completed'];
 const todoFilter = computed(() => store.getCurrentFilter);
 const unfinishedTodos = computed(() => store.getActiveCurrentTodos.length);
-
-const changeFilter = (filterType) => {
-  store.setFilter(filterType);
-};
 </script>
 
 <template>
   <div>
     <button
       type="button"
+      @click="store.clearCompletedTodos"
+      class="px-4 py-2 ml-2 font-medium text-slate-500 rounded-lg transition duration-300 ease-in-out hover:shadow-lg"
+    >
+      Clear all completed
+    </button>
+
+    <button
+      type="button"
       v-for="filterType in filters"
       :key="filterType"
-      @click="changeFilter(filterType)"
+      @click="store.setFilter(filterType)"
       :class="{
           'bg-[#7192BE] text-white': filterType === 'All' && todoFilter === 'All',
           'bg-[#32936F] text-white': filterType === 'Active' && todoFilter === 'Active',
