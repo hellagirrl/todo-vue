@@ -3,9 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Notes</title>
-    <script type="module" crossorigin src="/todo-vue/assets/index.2361ee3a.js"></script>
-    <link rel="stylesheet" href="/todo-vue/assets/index.ef17465c.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/todo-vue/assets/apple-touch-icon.54a4e792.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAA1dJREFUaEPVmr+LE0EUxz/PRkT8AwQVG0EbUStBIT/wB4i1aCWoWIio2KhVTKU2cidiIXJgpViLcHrkElCwUrFQwUZUsFdELMyYtzd7bHK7OzPJXpJdSJOZ933vO/tm3o9ZoYDHGLMH2A3sBLYDm4FNwHoL/xv4DnwDPgHvgbci8mZU9TIsgDFmF3AYOADsA9YFYv0BXgELwLyIvAuUj6YHEzDG7O2t4nHgGLBxGKUpMj+AJ72391hEXodgehMwxmwBTgEnga0hSgLmfgEeAnMi8tVHzouAMeYocN66jA/uqHPmgbsi8tQF5CRgjDkHXAK2ucAKHv8MzIjIvTzcXALGmGtAA1hbsHG+cH97+7QpIjeyBDIJTIHxsc25JFIJWLe5PcGVH1xwJXE5zZ1WELAbVo0ft8+73Er3hJLo29h9BOxRed/3tOl0OpHSdrudqbxarVKpVFaMq2zI/xZAT6ezySN2kMB1u2lzV0OVN5vNXMNjgEajgf6STyzfarVW6FFcfQZlEhN1U6ud0bNMwEbYR64gpQqSSrJW2OUPI4xrsDsRR+wkgRngYh6wrlytVkON1hVKc4ERDAsRnRURjU1Lb8AmZs9cuU29Xo/cptvthihbjbmaOx3RBDAmcAW46bP6aT69GhZ6YF4VkVsxgRc2Lc6Ui31/cXFxkq6TtG9BRA6KLUZeuvL5mMBqu4+6qef+0npivxI43aueHrhe2bgIuOwYGD+jBGaBCy7BKSVwRwlodDtUUgLPlcAHYEdJCXxUAj+BDSUl8EsJ/APWTAsB3WsB6UnXm4CmERqFc5Is1xp4jQ9DwMuFvLSPf1LkQl6bePy2eWmMNrHXMeoFN/5J0THqFcjGb5uXxiiQeaUSXnAFTMoqNTOgo1RCO8vOZC6vDCzA7mWI4GTOFjTOdLpIIwvCWkqnLQFnQVOQ0iJh+goa7fU7S8oitY+I1V9S2rfgLOpHVFqkeH9RbwnoxYWzrVKkFUNipbdVLInMxlZewynr5HDJZDW2HMlcemPLEtBbmMzWYmg7MG49hrQQlXROwpjfWrQk9DamnM3d2CdL3V5PkJj07UxsSvgFxxSRGP6KacCdynnJlyBR3mvWBInyXnQnI2ZpPzUYDPul/dgjLX+Z5Oc2/wFgMbZeV2FQKgAAAABJRU5ErkJggg==" />
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAhlJREFUWEfFlztLJEEQgL9ajDW40OxAEBOzSy7YB2hgIAj+BBdPk4s0uGSZ5IIzMvH5F4SFCy5Q2AdoYmYiwsFll2mg6cn2WWuP9M7Oo92dZSacrsfXVV3V1YLnZ4yZA8rAJ2ABmAdmrPojcAfcAtdAV0R++5iWLCFjzBKwBqwCs1nydv0v8BNoishFmk4igDHmI/AF2ASmPR1HxZ6AY+BIRP7E2YgFMMasAF+B5REdR9XOgX0R+RVdGAIwxmi4Gy/hW8zJeWjmBghEpOnaHQCwO/8+AecuxDc3Em8ANueHOYY9KYCajq3wTLgAP4CdOK1ut0sQBHQ6naHldrtNuazVCSqnMo2GZvD1q9VqtFqtqN6eiOzqzz6ALbWzuNOujtWwGg0d5XA2tDrWtURDgAMNS9Rw6DxmBzkwcCgi22I7XDuuyWj4dNduSPPw7DSrqgJsvDg/jTNcKpXo9Xpj+dQopmygrgAnQH1SABn0pwpwCXwuCOBKAe6BDwUBPCjAP2BqUgBawinl+5wKkKHsdTh9ABJT4OVhPKF+ChIP4Xi2vbT7hzCxDL1MZAhlpKBfhomNKKOJePH5NCIdNmNbsZeH0YV0bqymXkaj2/bSfL2Msq5jL1PvFxq8ji3E0EASHSY0n5VKZWAAUV230URz7jWQWAAdw4sbySyEjuPFDKVhGgsdyx2I4h4mDkRxTzO3qgp7nEZLe1LP8/8Gdwuo5kj8cQAAAABJRU5ErkJggg==">
+    <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAPZJREFUOE+tk8FqwkAQhr8BwcfwZh8juQgeGuhrFLHn3kJunrWhryG0h4KX5DH05lu0IKzMuAnrgrgN5rLMZObL/JN/hehxzs2BZ2AGTPzrI7ADvkXkJ2yRLnDOPQEL4BUYxWAfn4BPoBaRveYM4JtXwMuNxji9Bd4V0gHWwFKr2ra14qZp7MzznCzLLB+ewEZE3sRr/urGrqqqb7ozjcopFPDhtaPNZVkmqrCyWgG6jKlGAwAHBfwC44GAvytAyuzdMn2tAXoJKYCoxiT0S0wBRBPYEtW6/W9MgQSuLK6MFJsl+pr1BbmLkR5i5QAy7DKFuv97nc/Ot4NThhGBIAAAAABJRU5ErkJggg==">
+    <link rel="manifest" href="data:application/json;base64,ewogICAgIm5hbWUiOiAiIiwKICAgICJzaG9ydF9uYW1lIjogIiIsCiAgICAiaWNvbnMiOiBbCiAgICAgICAgewogICAgICAgICAgICAic3JjIjogIi9hbmRyb2lkLWNocm9tZS0xOTIucG5nIiwKICAgICAgICAgICAgInNpemVzIjogIjE5MngxOTIiLAogICAgICAgICAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgICAgICAgfSwKICAgICAgICB7CiAgICAgICAgICAgICJzcmMiOiAiL2FuZHJvaWQtY2hyb21lLTUxMi5wbmciLAogICAgICAgICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICAgICAgICJ0eXBlIjogImltYWdlL3BuZyIKICAgICAgICB9CiAgICBdLAogICAgInRoZW1lX2NvbG9yIjogIiNmZmZmZmYiLAogICAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZmZmZmZiIsCiAgICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIgp9">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Since Notion is gone...</title>
+    <script type="module" crossorigin src="/todo-vue/assets/index.2c8d4457.js"></script>
+    <link rel="stylesheet" href="/todo-vue/assets/index.d437d1b3.css">
   </head>
   <body>
     <div id="app"></div>
