@@ -1,17 +1,17 @@
 <script setup>
 import { RouterView } from 'vue-router';
-import TheHeaderComponent from './components/layouts/TheHeaderComponent.vue';
-import TheFooterComponent from './components/layouts/TheFooterComponent.vue';
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
 </script>
 
 <template>
   <div class="flex flex-col min-h-screen">
-    <TheHeaderComponent />
+    <Header />
 
     <main class="flex-grow pb-8">
       <RouterView />
     </main>
 
-    <TheFooterComponent />
+    <Footer />
   </div>
 </template>

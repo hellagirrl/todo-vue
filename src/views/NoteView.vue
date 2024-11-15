@@ -2,9 +2,9 @@
 import { onMounted, ref } from 'vue';
 import { useNoteStore } from '@/stores/index.js';
 import { useRouter, useRoute } from 'vue-router';
-import ConfirmModalComponent from '@/components/ConfirmModalComponent.vue';
-import TodoListComponent from '@/components/notes/TodoListComponent.vue';
-import TodoFilterComponent from '@/components/notes/TodoFilterComponent.vue';
+import ConfirmModal from '@/components/ConfirmModal.vue';
+import TodoList from '@/components/TodoList.vue';
+import TodoFilter from '@/components/TodoFilter.vue';
 import SaveSVG from '@/assets/icons/save.svg';
 import RemoveSVG from '@/assets/icons/remove.svg';
 
@@ -107,10 +107,10 @@ function updateContent(e, contentType) {
           </div>
         </div>
 
-        <TodoListComponent />
+        <TodoList />
 
         <div class="flex flex-row justify-end">
-          <TodoFilterComponent />
+          <TodoFilter />
 
           <button
             type="button"
@@ -125,7 +125,7 @@ function updateContent(e, contentType) {
 
     <teleport to="body">
       <div v-if="isModalOpen">
-        <ConfirmModalComponent
+        <ConfirmModal
           :modalData="modalData"
           @close="isModalOpen = false"
           :onConfirm="isConfirmed"

@@ -1,7 +1,7 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { useNoteStore } from '@/stores/index.js';
-import ConfirmModalComponent from '@/components/ConfirmModalComponent.vue';
+import ConfirmModal from '@/components/ConfirmModal.vue';
 import { ref, onUnmounted } from 'vue';
 
 const props = defineProps({
@@ -79,7 +79,7 @@ const deleteNote = async (note) => {
 
     <teleport to="body">
       <div v-if="isModalOpen">
-        <ConfirmModalComponent
+        <ConfirmModal
           :modalData="modalData"
           @close="isModalOpen = false"
           :onConfirm="isConfirmed"

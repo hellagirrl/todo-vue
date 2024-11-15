@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onUnmounted, onMounted } from 'vue';
-import NoteListComponent from '@/components/notes/NoteListComponent.vue';
+import NoteList from '@/components/NoteList.vue';
 import { useNoteStore } from '@/stores';
 import { uuid } from 'vue-uuid';
 
@@ -69,6 +69,6 @@ const addNewNote = () => {
       </button>
     </form>
 
-    <NoteListComponent />
+    <NoteList />
   </div>
 </template>

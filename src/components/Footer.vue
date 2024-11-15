@@ -1,5 +1,3 @@
-<script setup></script>
-
 <template>
   <footer class="text-gray-700 bg-white border-t body-font mt-auto">
     <div class="container flex flex-row py-6 justify-between">
@@ -10,7 +8,7 @@
           class="text-gray-800 hover:text-gray-400"
           target="_blank"
         >
-          Github
+          GitHub
         </a>
       </div>
     </div>
